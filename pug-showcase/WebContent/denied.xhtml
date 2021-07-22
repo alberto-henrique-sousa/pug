@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8"> 
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+			<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+			
+			<h:outputStylesheet library="css" name="standard2.css" />
+
+		</h:head>
+		<h:body>
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader">
+					<a href="login.xhtml" style="text-decoration: none; outline: none;">
+						<span id="spanHeaderTitle">Pug Showcase</span>
+						<span id="spanHeaderSubTitle">for PrimeFaces</span>
+					</a>	
+				</div>
+			</div>
+					
+			<p:panel>
+				<f:facet name="header">
+					Acesso negado.
+				</f:facet>
+				<h:form>
+					<h:outputLink value="index.xhtml">
+						Clique aqui para retornar.
+					</h:outputLink>
+				</h:form>
+			</p:panel>
+											
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Showcase, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>

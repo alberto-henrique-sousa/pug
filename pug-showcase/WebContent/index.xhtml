@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8"> 
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+			<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+			
+			<h:outputStylesheet library="css" name="standard2.css" />
+
+			<h:outputScript library="scripts" name="pug-editor.js?_=09112016" />
+
+		</h:head>
+		<h:body onload="init()">
+
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{editorBean.folder}" />
+				<f:viewAction action="#{editorBean.onLoad(0)}" />
+			</f:metadata>		
+		
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader" style="float: left;">
+					<a href="index.xhtml?folder=#{editorBean.folder}" style="text-decoration: none; outline: none;">
+						<span id="spanHeaderTitle">Pug Showcase</span>
+						<span id="spanHeaderSubTitle">for PrimeFaces</span>
+					</a>	
+				</div>
+				<div style="float: right;">
+					<h:form>
+						<h:panelGrid columns="3" cellpadding="3">
+							<p:outputLabel value="#{editorBean.user.username}"/>
+							<h:outputLabel>|</h:outputLabel>
+							<p:commandLink action="#{loginPugBean.logoff}">Sair</p:commandLink>
+						</h:panelGrid>
+					</h:form>				
+				</div>
+				<div style="clear: both;">
+				</div>
+			</div>
+			<p:panel id="panelExplorer" widgetVar="panelExplorer" header="Projects Explorer" toggleable="true">
+				<h:form id="formExplorer">
+					<p:treeTable value="#{editorBean.explorer}" var="document" sortBy="#{document.name}">
+				        <p:column headerText="Name">
+				            <h:outputText value="#{document.name}" />
+				        </p:column>
+				        <p:column headerText="Open">
+							<p:link outcome="view.xhtml" value="#{document.name}" rendered="#{!document.folder}">
+							    <f:param name="folder" value="#{document.folderName}"/>
+							    <f:param name="file" value="#{document.name}"/>
+							</p:link>				        
+				        </p:column>
+				        <p:column style="width:130px" headerText="Publicação">
+				        	<h:outputText value="#{document.publishText}" style="color: #{document.publishColor}" />
+				        </p:column>
+				        <p:column style="width:120px" headerText="Status">
+				        	<h:outputText value="#{document.statusText}" style="color: #{document.statusColor}"/>
+				        </p:column>				        
+				    </p:treeTable>				
+				</h:form>
+			</p:panel>
+						
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Showcase, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>

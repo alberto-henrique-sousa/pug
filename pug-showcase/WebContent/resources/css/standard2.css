@@ -1,0 +1,132 @@
+body {
+	background-color: #EFF3F6;
+}
+.breakpoints {width: 16px;}
+.breakpoint { color: #822; }
+.CodeMirror {border: 1px solid #aaa;}
+
+.tableKeypress {
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.tableKeypress td, th {
+    border: 1px solid #BCC7CF; 
+    text-align: left;
+    padding: 8px;
+}
+
+.tableKeypress tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.CodeMirror {
+	border: 0px solid #eee;
+	height: 100% !important;
+}
+#divHeader {
+	padding-bottom: 10px; 
+	/*border-bottom: solid 1px #bcc7cf;*/
+}
+#divSubHeader {
+	font-family: 'latoregular', "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background-image: url("/pug/resources/images/logoPugShowcase.png"); 
+	background-repeat: no-repeat; 
+	background-position: center right;
+	width: 320px;	
+}
+#spanHeaderTitle {
+	color: #5c666a; 
+	font-size: 30px; 
+	display: block !important;
+}
+#spanHeaderSubTitle {
+	color: #25aae1; 
+	font-size: 26px;
+}
+.panelHistoric {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#areaHistoric {
+	overflow: scroll;
+	overflow-x: hidden;
+	max-height:100px;
+}
+.ContentSideSections {
+    display: block;
+    border-top: solid 1px #bcc7cf;
+    border-bottom: solid 1px #bcc7cf;
+    padding: 10px 30px 10px 30px;
+}
+.gray {
+    color: #5C666A;
+}
+.floatLeft {
+    float: left;
+}
+.fontSize14 {
+    font-size: 14px;
+}
+.floatRight {
+    float: right;
+}
+.ui-grid-col-4 {
+    width: ;	
+}
+/* Tabs Source */
+.ui-tabs {
+    background: none;
+    border: 0 none;
+}
+
+.ui-tabs .ui-tabs-nav {
+    background: none;
+    margin-bottom: -1px;
+    padding: 0 !important;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    background: #DFE4E6;
+    border-color: #BCC7CF;
+    box-shadow: none !important;
+}
+
+.ui-tabs .ui-tabs-nav li.tab-doc {
+    margin-right: 0;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-state-hover.ui-state-default a {
+    color: #5C666A;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-state-default a {
+    color: #84939F;
+    font-family: 'latoregular', "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-shadow: none;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-state-active a {
+    color: #5C666A;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-state-hover {
+    box-shadow: none; 
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+    background: #EFF3F6;
+}
+
+.ui-tabs .ui-tabs-panels {
+    border-top: 1px solid #BCC7CF;
+}
+
+.ui-tabs .ui-tabs-nav li.tab-doc {
+    float: right
+}
+
+.ui-tabs.ui-tabs-top>.ui-tabs-nav li {
+    border-bottom: 0;
+    top: 1px;
+}

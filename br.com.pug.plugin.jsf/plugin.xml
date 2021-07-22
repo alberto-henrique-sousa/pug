@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<!-- ======================================================== -->
+	<!-- Wizards -->
+	<!-- ======================================================== -->
+	<extension
+		point="org.eclipse.ui.newWizards">
+      <category
+            name="Pug Plugin - JSF"
+            id="br.com.pug.plugin.jsf">
+      </category>
+      <category
+      		parentCategory="br.com.pug.plugin.jsf"
+            name="JSF"
+            id="br.com.pug.plugin.jsf.wizard">
+      </category>
+      <wizard
+            category="br.com.pug.plugin.jsf/br.com.pug.plugin.jsf.wizard"
+            class="br.com.pug.plugin.jsf.wizards.project.AddPugJSFWizard"
+            icon="icons/wizards/addpug/wizard.png"
+            id="br.com.pug.plugin.jsf.wizards.project.AddPugJSFWizard"
+            name="Add Pug">
+      </wizard>
+      <wizard
+            category="br.com.pug.plugin.jsf/br.com.pug.plugin.jsf.wizard"
+            class="br.com.pug.plugin.jsf.wizards.bean.BeanJSFWizard"
+            icon="icons/wizards/service/wizard.png"
+            id="br.com.pug.plugin.jsf.wizards.bean.BeanJSFWizard"
+            name="Bean">
+      </wizard>
+      <wizard
+            category="br.com.pug.plugin.jsf/br.com.pug.plugin.jsf.wizard"
+            class="br.com.pug.plugin.jsf.wizards.xhtml.XHTMLWizard"
+            icon="icons/wizards/crud/wizard.png"
+            id="br.com.pug.plugin.jsf.wizards.xhtml.XHTMLWizard"
+            name="CRUD">
+      </wizard>	      	      	      	
+	</extension>
+	      
+	<!-- ======================================================== -->
+	<!-- Popup -->
+	<!-- ======================================================== -->
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution adaptable="true"
+			id="br.com.pug.plugin.jsf.objectContribution.all"
+			objectClass="org.eclipse.core.resources.IResource">
+			<menu id="br.com.pug.plugin.jsf.menu" label="Pug Plugin - JSF"
+				path="group.new">
+				<separator name="JSF_project"/>
+				<separator name="JSF_service"/>
+				<separator name="JSF_guide"/>
+			</menu>
+		</objectContribution>	
+		<objectContribution adaptable="true"
+			id="br.com.pug.plugin.jsf.objectContribution.model"
+			objectClass="org.eclipse.jdt.core.IJavaElement">
+			<action id="br.com.pug.plugin.jsf.actions.model.NewMigrationGuideAction"
+				class="br.com.pug.plugin.jsf.actions.model.NewMigrationGuideAction"
+				label="Migration Guide" icon="icons/wizards/service/wizard.png"
+				menubarPath="br.com.pug.plugin.jsf.menu/JSF_guide"/>						
+			<action id="br.com.pug.plugin.jsf.actions.model.NewXHTMLAction"
+				class="br.com.pug.plugin.jsf.actions.model.NewXHTMLAction"
+				label="CRUD" icon="icons/wizards/crud/wizard.png"
+				menubarPath="br.com.pug.plugin.jsf.menu/JSF_service"/>			
+			<action id="br.com.pug.plugin.jsf.actions.model.NewBeanJSFAction"
+				class="br.com.pug.plugin.jsf.actions.model.NewBeanJSFAction"
+				label="Bean" icon="icons/wizards/service/wizard.png"
+				menubarPath="br.com.pug.plugin.jsf.menu/JSF_service"/>			
+			<action id="br.com.pug.plugin.jsf.actions.model.NewAddPugJSFAction"
+				class="br.com.pug.plugin.jsf.actions.model.NewAddPugJSFAction"
+				label="Add Pug" icon="icons/wizards/addpug/wizard.png"
+				menubarPath="br.com.pug.plugin.jsf.menu/JSF_project"/>			
+		</objectContribution>
+	</extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.runtime.IAdaptable"
+            id="br.com.pug.plugin.jsf.objectContribution.model.explorer">
+         <action
+               label="Open Explorer"
+               icon="icons/wizards/service/OpenExplorer.png"
+               class="br.com.pug.plugin.jsf.actions.model.OpenExplorerPopupAction"
+               menubarPath="br.com.pug.plugin.jsf.menu/JSF_guide"
+               enablesFor="*"
+               id="br.com.pug.plugin.jsf.actions.model.OpenExplorerPopupAction">
+         </action>
+      </objectContribution>
+   </extension>	
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="br.com.pug.plugin.jsf.util.PreferenceInitializer">
+      </initializer>
+   </extension>		   
+</plugin>

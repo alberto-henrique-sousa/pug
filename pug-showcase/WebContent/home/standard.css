@@ -1,0 +1,144 @@
+body {
+	background-color: #6db33f;
+}
+.tableVersion {
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.tableVersion td, th {
+    border: 1px solid #BCC7CF; 
+    text-align: left;
+    padding: 8px;
+}
+
+.tableVersion tr:nth-child(even) {
+    background-color: #dddddd;
+}
+#divHeader {
+	padding-bottom: 10px; 
+	border-bottom: solid 1px #bcc7cf;
+}
+#divSubHeader {
+	font-family: 'latoregular', "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background-image: url("http://www.albertosousa.me/pug/resources/images/logoPugShowcase.png"); 
+	background-repeat: no-repeat; 
+	background-position: center right;
+	width: 320px;	
+}
+#spanHeaderTitle {
+	color: #5c666a; 
+	font-size: 30px; 
+	display: block !important;
+}
+#spanHeaderSubTitle {
+	color: #25aae1; 
+	font-size: 26px;
+}
+.ContentSideSections {
+    display: block;
+    border-top: solid 1px #bcc7cf;
+    border-bottom: solid 1px #bcc7cf;
+    padding: 10px 30px 10px 30px;
+}
+.gray {
+    color: #5C666A;
+}
+.floatLeft {
+    float: left;
+}
+.fontSize14 {
+    font-size: 14px;
+}
+.floatRight {
+    float: right;
+}
+
+.highlight-topic {
+    font-family: 'latolight';
+    color: #f1f1f1;
+    font-weight: 500;
+    text-shadow: none;
+    letter-spacing: -1px;
+    font-size: 60px;
+    display: block;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin: 10px 0px 10px;
+}
+
+.highlight-minitopic {
+    font-family: 'latolight';
+    color: #f1f1f1;
+    font-weight: 100;
+    line-height: 30px;
+    text-shadow: none;
+    letter-spacing: normal;
+    font-size: 26px;
+    display: block;
+    margin: 0px 0px 50px;
+}
+
+.button-block {
+    display: block;
+    padding: 10px 0px;
+}
+
+.btn{
+	display:inline-block;
+    float:left;
+    margin-right:10px;
+	font-family:'latolight';
+    font-size:20px;
+    padding:18px 36px;
+    text-decoration:none;
+    background-color:rgba(37, 44, 48, 0.9);
+    color:#f1f1f1;
+    border-radius:3px;
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.07);
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.07);
+}
+.btn span {
+}
+.btn:hover {
+    text-decoration:none;
+    background-color:rgba(37, 44, 48, 0.8);
+}
+.btn-demo span {
+}
+.btn-download span {
+}
+.btn-learn span {
+}
+.visual{
+	width:100%;
+    overflow:hidden;
+}
+.visual-block{
+	min-width:998px;
+    max-width:70%;
+	margin:60px auto 100px;
+	text-align:center;
+	padding:37px 0 7px;
+    overflow:hidden;
+}
+.visual-block h2{
+	display:block;
+	margin:0 auto;
+	color:#707070;
+	letter-spacing:-2px;
+	text-shadow:0 -2px 1px #272727;
+	font:bold 45px/54px "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+.visual-block .heading{
+	display:block;
+	color:#3c3c3c;
+	font-size:30px;
+	line-height:34px;
+	margin:0 0 24px;
+}
+.visual-block .image{
+	display:block;
+	margin:0 auto;
+	padding:0 10px 0 0;
+}

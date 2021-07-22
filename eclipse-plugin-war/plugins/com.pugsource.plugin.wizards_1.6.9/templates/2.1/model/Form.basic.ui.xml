@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:pug='urn:import:com.pugsource.gwt.library.client.ui' xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:p2="urn:import:com.google.gwt.user.datepicker.client">
+	<ui:style>
+		.panel {
+		}
+	</ui:style>
+
+	<g:FlowPanel styleName="{style.panel}">
+		<g:VerticalPanel width="100%">
+			<g:VerticalPanel ui:field="verticalPanelTitle" width="100%">
+				<g:Label text="" ui:field="titleForm" styleName="gwt-title-module"/>
+			</g:VerticalPanel>
+			<g:HorizontalPanel ui:field="horizontalPanelAdd"
+				width="100%" spacing="10">
+				<g:Label text="Ordenar e Pesquisar" styleName="aLink"
+					ui:field="lblOrderSearch" />
+				<g:Label text="Novo..." horizontalAlignment="ALIGN_RIGHT"
+					styleName="aLink" ui:field="lblAdd" />
+			</g:HorizontalPanel>
+			<g:VerticalPanel ui:field="verticalPanelEdit">
+				<g:Grid>
+%fieldsInstance%				    
+					<g:row>
+						<g:customCell>
+							<g:Label />
+						</g:customCell>
+						<g:customCell>
+							<g:HorizontalPanel spacing="5">
+								<pug:ButtonPug width="75px" ui:field="btnGravar"
+									label="Gravar" />
+								<pug:ButtonPug width="75px" ui:field="btnCancelar"
+									label="Cancelar" />
+							</g:HorizontalPanel>
+						</g:customCell>
+					</g:row>
+				</g:Grid>
+			</g:VerticalPanel>
+			<g:VerticalPanel ui:field="verticalPanelGrid" width="100%">
+				<g:VerticalPanel ui:field="verticalPanelSearch">
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Ordem:" />
+							</g:customCell>
+							<g:customCell>
+								<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+									<g:ListBox ui:field="comboBoxOrder" />
+									<g:CheckBox text="Decrescente" ui:field="checkBoxOrder" />
+								</g:HorizontalPanel>
+							</g:customCell>
+						</g:row>
+%fieldsSearch%						
+						<g:row>
+							<g:customCell>
+								<g:Label text="" />
+							</g:customCell>
+							<g:customCell>
+								<pug:ButtonPug label="Pesquisar" width="75px"
+									ui:field="bntPesquisar" />
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+				</g:VerticalPanel>
+				<p1:DataGrid width="100%" height="400px" ui:field="dataGrid" />
+				<g:HorizontalPanel width="100%"
+					horizontalAlignment="ALIGN_RIGHT" ui:field="horizontalPanelPagination">
+					<g:HorizontalPanel spacing="5" verticalAlignment="ALIGN_MIDDLE">
+						<g:Button text="&lt;&gt;" width="55px" title="Atualizar..." ui:field="btnRefresh" />
+						<g:Button text="&lt;&lt;" width="55px" title="Primeira" ui:field="btnGridPrimeiro" />
+						<g:Button text="&lt;" width="55px" title="Anterior" ui:field="btnGridAnterior" />
+						<g:Button width="55px" text="&gt;" title="Próxima" ui:field="btnGridProximo" />
+						<g:Button width="55px" text="&gt;&gt;" title="Última" ui:field="btnGridUltimo" />
+						<g:Label text="Página:" />
+						<g:ListBox ui:field="comboBoxGridPaginas" />
+					</g:HorizontalPanel>
+				</g:HorizontalPanel>
+			</g:VerticalPanel>
+		</g:VerticalPanel>
+	</g:FlowPanel>
+</ui:UiBinder>

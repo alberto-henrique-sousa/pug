@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="db_factory">
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:base</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="hibernate.default_schema">DBO_BASE</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.search.autoregister_listeners">true</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.pug.debug">false</property>
+        <property name="hibernate.pug.oracle.session">NLS_TERRITORY = 'BRAZIL';NLS_CURRENCY = 'R$';NLS_ISO_CURRENCY = 'BRAZIL';NLS_NUMERIC_CHARACTERS  = '.,';NLS_CALENDAR = 'GREGORIAN';NLS_DATE_FORMAT = 'DD/MM/RR';NLS_DATE_LANGUAGE = 'BRAZILIAN PORTUGUESE';NLS_SORT = 'WEST_EUROPEAN_AI';NLS_TIME_FORMAT = 'HH24:MI:SSXFF';NLS_TIMESTAMP_FORMAT = 'DD/MM/RR HH24:MI:SSXFF';NLS_TIME_TZ_FORMAT = 'HH24:MI:SSXFF TZR';NLS_TIMESTAMP_TZ_FORMAT = 'DD/MM/RR HH24:MI:SSXFF TZR';NLS_DUAL_CURRENCY = 'Cr$';NLS_COMP = 'LINGUISTIC';NLS_LENGTH_SEMANTICS = 'BYTE';NLS_NCHAR_CONV_EXCP = 'FALSE'</property>
+    </session-factory>
+</hibernate-configuration>

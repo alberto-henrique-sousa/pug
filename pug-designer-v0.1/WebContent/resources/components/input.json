@@ -1,0 +1,38 @@
+[
+	{
+		"name" : "autocomplete",
+		"shortName" : "complete",
+		"syntax" : "<p:autoComplete ?>\n</p:autoComplete>",
+		"attributes" : "" 
+	},		 			   
+	{
+		"name" : "inputtextarea",
+		"shortName" : "textarea",
+		"syntax": "<p:inputTextarea ?>\n</p:inputTextarea>",
+		"attributes" : "" 
+	},		 			
+	{
+		"name" : "selectbooleanbutton",
+		"shortName" : "",
+		"syntax" : "<p:selectBooleanButton ?>\n</p:selectBooleanButton>",
+		"attributes" : "" 
+	},		 			
+	{
+		"name" : "selectbooleancheckbox",
+		"shortName" : "",
+		"syntax" : "<p:selectBooleanCheckbox ?>\n</p:selectBooleanCheckbox>",
+		"attributes" : "" 
+	},		 			
+	{
+		"name" : "inputtext",
+		"shortName" : "text",
+		"syntax" : "<p:inputText ?>\n</p:inputText>",
+		"attributes" : "" 
+	},		 			
+	{
+		"name" : "inputmask",
+		"shortName" : "mask",
+		"syntax" : "<p:inputMask ?>\n</p:inputMask>",
+		"attributes" : "" 
+	}		 
+]				

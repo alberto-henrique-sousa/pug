@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+		 xmlns:pe="http://primefaces.org/ui/extensions">
+	<f:view locale="pt-BR" contentType="text/html" encoding="UTF-8">
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link type="text/css" rel="stylesheet" href="standard.css?_=1478870012554" />
+			<script type="text/javascript" src="standard.js?_=1478870012554"></script>
+		</h:head>
+		<h:body onload="init()">
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{pugBean.folder}" />
+    			<f:viewParam id="file" name="file" value="#{pugBean.file}" />
+				<f:viewAction action="#{pugBean.onload()}" />
+			</f:metadata>
+<h:form>
+    <p:multiSelectListbox value="#{pugBean.java.selection}" effect="slide" header="Categories" showHeaders="true">
+        <f:selectItems value="#{pugBean.java.categories}" />
+    </p:multiSelectListbox>
+ 
+    <p:commandButton value="Save" icon="ui-icon-check" update="out" style="display:block;margin:10px 0" />
+ 
+    <h:outputText id="out" value="Value: #{pugBean.java.selection}" style="display:block" />
+</h:form>
+		</h:body>
+	</f:view>
+</html>

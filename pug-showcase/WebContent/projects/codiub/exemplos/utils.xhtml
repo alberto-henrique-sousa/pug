@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+		 xmlns:pe="http://primefaces.org/ui/extensions">
+	<f:view locale="pt-BR" contentType="text/html" encoding="UTF-8">
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link type="text/css" rel="stylesheet" href="standard.css?_=1478870054661" />
+			<script type="text/javascript" src="standard.js?_=1478870054661"></script>
+		</h:head>
+		<h:body onload="init()">
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{pugBean.folder}" />
+    			<f:viewParam id="file" name="file" value="#{pugBean.file}" />
+				<f:viewAction action="#{pugBean.onload()}" />
+			</f:metadata>
+<p:outputLabel value="* Ative o console (F12)"/>
+<p:tabView id="tabViewSamples" widgetVar="tabViewSamples" onTabShow="tabViewFocus()" style="margin-top: 10px;">
+    <p:tab title="Tab 1">
+        <h:form id="formTab1">
+            <h:panelGrid columns="3" cellpadding="3">
+                <p:outputLabel value="Nome:"/>
+                <p:inputText id="inputNome1" widgetVar="inputNome1"/>
+                <p:commandButton id="btnInput1" value="Enviar" icon="ui-icon-check" onclick="onClickBtnInput1()"/>
+            </h:panelGrid>
+        </h:form>
+    </p:tab>
+    <p:tab title="Tab 2">
+        <h:form id="formTab2">
+	        <p:commandButton value="Ir para Tab 1" onclick="onClickGoTabInput()"/>
+        </h:form>
+    </p:tab>
+    <p:tab title="Tab 3">
+        <h:form id="formTab3">
+	        <p:commandButton value="Mudar Tema Aristo" onclick="onClickChangeTheme()"/>
+        </h:form>
+    </p:tab>
+    <p:tab title="Tab 4">
+        <h:form id="formTab4">
+	        <p:commandButton value="Executar Console por meio do Bean" action="#{pugBean.java.callConsoleJS}"/>
+        </h:form>
+    </p:tab>
+</p:tabView>    
+		</h:body>
+	</f:view>
+</html>

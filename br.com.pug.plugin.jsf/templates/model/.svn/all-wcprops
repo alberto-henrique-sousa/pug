@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/15/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model
+END
+Library.gwt.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Library.gwt.xml
+END
+Module.gwt.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Module.gwt.xml
+END
+Module.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/15/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Module.java
+END
+Library.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Library.html
+END
+Module.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Module.html
+END
+RemoteService.Service.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/15/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/RemoteService.Service.java
+END
+Library.css
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Library.css
+END
+Module.css
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/Module.css
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/1/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/web.xml
+END
+RemoteService.ServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/15/trunk/com.google.gdt.eclipse.designer.wizards/templates/2.1/model/RemoteService.ServiceImpl.java
+END

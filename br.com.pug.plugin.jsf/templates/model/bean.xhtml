@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:composition>
+	    <h:form prependId="false" id="%layoutName%GrowlForm">
+	    	<p:messages id="%layoutName%Growl" showDetail="false" autoUpdate="true" closable="true"/>
+	    </h:form>		
+		<h:form id="%layoutName%DataForm" enctype="multipart/form-data">
+			<p:panel id="%layoutName%PanelData">
+				<f:facet name="header">
+					<h:outputText value="Tabela de #{%layoutName%Bean.title}" />
+				</f:facet>
+				<div class="formActiosLeft">
+					<h:outputText value="&#160;" />
+				</div>
+				<div class="formActionsRight">
+					<p:commandButton id="%layoutName%ButtonNew" icon="ui-icon ui-icon-document" title="#{messages.label_create_hint}" actionListener="#{%layoutName%Bean.showCreate}" update=":%layoutName%DataForm:%layoutName%PanelData :%layoutName%GrowlForm:%layoutName%Growl" rendered="#{!%layoutName%Bean.form}"/>
+				</div>
+									
+				<div class="divDataTable">
+					<p:dataTable id="%layoutName%DataGrid" var="data%classLayoutName%" value="#{%layoutName%Bean.%layoutName%Lazy}" 						
+						draggableColumns="true"  
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						currentPageReportTemplate="(#{messages.label_datatable_page} {currentPage} #{messages.label_datatable_interval} {totalPages} - {totalRecords} #{messages.label_datatable_records})"
+						rowsPerPageTemplate="5,10,15,25,50,100" lazy="true"
+						rowKey="#{data%classLayoutName%.id}" paginator="true" rows="#{rowsGrid == null ? '10' : rowsGrid}" selectionMode="single"
+						sortBy="#{data%classLayoutName%.id}" sortOrder="ASCENDING" rendered="#{!%layoutName%Bean.form}">
+						
+%fieldsGrid%						
+						<p:column styleClass="action-column">
+							<p:commandButton id="%layoutName%ViewButton" icon="ui-icon-zoomin" title="#{messages.label_view_hint}" actionListener="#{%layoutName%Bean.showView}" update=":%layoutName%DataForm:%layoutName%PanelData :%layoutName%GrowlForm:%layoutName%Growl">
+								<f:setPropertyActionListener value="#{data%classLayoutName%}" target="#{%layoutName%Bean.%layoutName%}" />
+							</p:commandButton>
+							<p:commandButton id="%layoutName%EditButton" icon="ui-icon-pencil" title="#{messages.label_edit_hint}" actionListener="#{%layoutName%Bean.showEdit}" update=":%layoutName%DataForm:%layoutName%PanelData :%layoutName%GrowlForm:%layoutName%Growl">
+								<f:setPropertyActionListener value="#{data%classLayoutName%}" target="#{%layoutName%Bean.%layoutName%}" />
+							</p:commandButton>
+							<p:commandButton id="%layoutName%DeleteButton" icon="ui-icon-trash" title="#{messages.label_delete}" onclick="PF('%layoutName%DeleteDialogWidget').show();">
+								<f:setPropertyActionListener value="#{data%classLayoutName%}" target="#{%layoutName%Bean.%layoutName%}" />
+							</p:commandButton>
+						</p:column>
+						<p:column styleClass="action-column-select" rendered="#{select}">
+							<p:commandButton id="%layoutName%SelectButton" icon="ui-icon-check" title="#{messages.label_select_hint}" action="#{%layoutName%Bean.closeDialog}">
+								<f:setPropertyActionListener value="#{data%classLayoutName%}" target="#{%layoutName%Bean.%layoutName%}"/>
+							</p:commandButton>
+						</p:column>																																										
+					</p:dataTable>
+					
+				</div>
+				
+				<p:panel id="%layoutName%PanelForm" header="#{%layoutName%Bean.titlePanelForm}" rendered="#{%layoutName%Bean.form}">
+			        <h:panelGrid id="%layoutName%PanelGrid" columns="3">
+%fieldsForm%			        
+			        </h:panelGrid>
+	        		<p:commandButton id="%layoutName%SaveButton" value="#{messages.label_save}" actionListener="#{%layoutName%Bean.save}" update=":%layoutName%DataForm:%layoutName%PanelData :%layoutName%GrowlForm:%layoutName%Growl" icon="ui-icon-check" rendered="#{!%layoutName%Bean.view}"/>
+	        		<p:commandButton id="%layoutName%CancelButton" value="#{!%layoutName%Bean.view ? messages.label_cancel : messages.label_back}" actionListener="#{%layoutName%Bean.showGrid}" icon="ui-icon-close" update=":%layoutName%DataForm:%layoutName%PanelData :%layoutName%GrowlForm:%layoutName%Growl" immediate="true"/>
+				</p:panel>		
+						    				    	
+			</p:panel>			
+		</h:form>
+		
+		<p:confirmDialog id="%layoutName%DeleteDialog" widgetVar="%layoutName%DeleteDialogWidget" message="#{messages.label_confirm_deletion}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_header}">
+			<p:outputPanel id="%layoutName%deletePanel">
+				<h:form id="%layoutName%deleteForm">
+					<p:commandButton id="%layoutName%deleteYesButton" value="#{messages.label_yes}" actionListener="#{%layoutName%Bean.delete}" update=":%layoutName%DataForm:%layoutName%PanelData :%layoutName%GrowlForm:%layoutName%Growl" oncomplete="PF('%layoutName%DeleteDialogWidget').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton id="%layoutName%deleteNoButton" value="#{messages.label_no}" onclick="PF('%layoutName%DeleteDialogWidget').hide()" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+				</h:form>
+			</p:outputPanel>
+		</p:confirmDialog>
+	</ui:composition>
+</html>

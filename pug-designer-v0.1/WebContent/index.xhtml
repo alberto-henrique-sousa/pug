@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html"> 
+		<h:head>
+			<title>Pug Designer</title>
+			<meta http-equiv="Cache-Control" content="no-cache, no-store" />
+      		<meta http-equiv="Pragma" content="no-cache, no-store" />			
+			<h:outputStylesheet library="css" name="standard.css" />
+			<h:outputStylesheet library="css" name="shCoreDefault.css" />
+			<h:outputScript library="scripts" name="shCore.js" />
+			<h:outputScript library="scripts" name="shBrushXml.js" />
+			<h:outputScript library="scripts" name="shAutoloader.js" />
+			<h:outputScript library="scripts" name="terminal.js" />
+		</h:head>
+		<h:body onload="readLayout()">
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader">
+					<span id="spanHeaderTitle">Pug Designer</span>
+					<span id="spanHeaderSubTitle">for PrimeFaces</span>
+				</div>
+			</div>
+			<p:tabView id="tabView" widgetVar="tabView">
+		        <p:tab title="Code XHTML">
+					<h:form id="formCommand">
+						<p:growl id="growl" showDetail="true" sticky="true"/>  
+ 
+						<p:focus for="command" />
+						
+						<p:autoComplete id="command" inputStyle="width:100%; margin-bottom: 5px" style="width:100%; margin-top: 5px" scrollHeight="300" forceSelection="false" value="#{terminalView.command}" widgetVar="command" completeMethod="#{terminalView.completeCommand}">
+							<p:ajax event="keyup" oncomplete="selectBlockCmdCode()" />
+						</p:autoComplete>
+						
+						<p:outputLabel value="Lines:" style="margin-right: 5px;"/>
+						<p:inputText id="opLine1" widgetVar="opLine1" value="#{terminalView.opLine1}" style="width: 50px; margin-right: 5px;" inputStyle="width: 50px;">
+							<p:ajax event="keyup" oncomplete="selectBlockInsCode()" />
+						</p:inputText>
+						<p:inputText id="opLine2" widgetVar="opLine2" value="#{terminalView.opLine2}" style="width: 50px; margin-right: 5px;" inputStyle="width: 50px;">
+							<p:ajax event="keyup" oncomplete="selectBlockInsCode()" />
+						</p:inputText>
+						
+						<p:menuButton value="Pug" style="margin-right: 5px;">
+					        <p:menuitem value="Edit" icon="ui-icon-pencil" onclick="pugCmd('edit')" />
+					        <p:menuitem value="Delete" icon="ui-icon-trash" onclick="pugCmd('delete')"/>
+					        <p:menuitem value="Cut" icon="ui-icon-scissors" onclick="pugCmd('cut')"/>
+					        <p:menuitem value="Copy" icon="ui-icon-copy" onclick="pugCmd('copy')"/>
+					        <p:menuitem value="Paste" icon="ui-icon-clipboard" onclick="pugCmd('paste')"/>
+					    </p:menuButton>						
+						
+						<p:panel rendered="false" id="panelHistoric" styleClass="panelHistoric" widgetVar="panelHistoric" header="Commands" toggleable="true">
+							<div id="areaHistoric"/>
+						</p:panel>
+						
+ 						<p:commandButton value="Execute" icon="ui-icon-play" actionListener="#{terminalView.execute}" update="growl" style="margin-right: 5px;"/>
+ 						<!-- <p:commandButton value="Wizard" icon="ui-icon-lightbulb" type="button" onclick="PF('wizard').show();"/> -->
+						<p:commandButton value="Remove" icon="ui-icon-trash" actionListener="#{terminalView.remove}" update="growl">
+							<p:confirm header="Confirmation" message="Remove layout?" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					    </p:confirmDialog>
+					    
+					</h:form>
+		        	<p:panel id="panelCode">
+		        		<div id="areaPreCode">
+							<pre id="codeXHTML" class="brush: xml;"></pre>
+						</div>	
+					</p:panel>				        
+					<p:resizable for="panelCode" />
+		        </p:tab>
+		        <p:tab title="View">
+					<iframe id="iframeView" width="100%"  
+                       	height="100%" frameborder="0">  
+           			</iframe> 			        
+		        </p:tab>
+		        <p:tab title="Syntax" titleStyleClass="tab-doc docslide-556" >
+   		        </p:tab>
+			</p:tabView>
+						
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Designer, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>

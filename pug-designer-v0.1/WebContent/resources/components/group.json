@@ -1,0 +1,62 @@
+[
+	{
+		"name" : "ajax",
+		"title" : "Ajax Core"
+	},		 			
+	{
+		"name" : "input",
+		"title" : "Input"
+	},		 			
+	{
+		"name" : "button",
+		"title" : "Button"
+	},		 			
+	{
+		"name" : "data",
+		"title" : "Data"
+	},		 			
+	{
+		"name" : "panel",
+		"title" : "Panel"
+	},		 			
+	{
+		"name" : "overlay",
+		"title" : "Overlay"
+	},		 			
+	{
+		"name" : "menu",
+		"title" : "Menu"
+	},		 			
+	{
+		"name" : "charts",
+		"title" : "Charts"
+	},		 			
+	{
+		"name" : "messages",
+		"title" : "Messages"
+	},		 			
+	{
+		"name" : "Multimedia",
+		"title" : "Multimedia"
+	},		 			
+	{
+		"name" : "file",
+		"title" : "File"
+	},		 			
+	{
+		"name" : "dragdrop",
+		"title" : "DragDrop"
+	},		 			
+	{
+		"name" : "clientside",
+		"title" : "Client Side Validation"
+	},		 			
+	{
+		"name" : "dialog",
+		"title" : "Dialog Framework"
+	},		 			
+	{
+		"name" : "misc",
+		"title" : "Misc"
+	}
+]	

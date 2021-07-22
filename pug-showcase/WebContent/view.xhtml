@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8"> 
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+			<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+			
+			<h:outputStylesheet library="css" name="standard2.css" />
+			<h:outputStylesheet library="codemirror" name="lib/codemirror.css" />
+			<h:outputStylesheet library="codemirror" name="addon/fold/foldgutter.css" />
+			<h:outputStylesheet library="codemirror" name="addon/dialog/dialog.css" />
+			<h:outputStylesheet library="codemirror" name="addon/display/fullscreen.css" />
+			<h:outputStylesheet library="codemirror" name="addon/hint/show-hint.css" />
+
+			<h:outputScript library="scripts" name="pug-view.js?_=09112016" />
+			<h:outputScript library="codemirror" name="lib/codemirror.js" />
+ 			<h:outputScript library="codemirror" name="addon/search/searchcursor.js" />
+ 			<h:outputScript library="codemirror" name="addon/search/search.js" />
+ 			<h:outputScript library="codemirror" name="addon/dialog/dialog.js" />
+ 			<h:outputScript library="codemirror" name="addon/fold/foldcode.js" />
+ 			<h:outputScript library="codemirror" name="addon/fold/brace-fold.js" />
+ 			<h:outputScript library="codemirror" name="addon/display/fullscreen.js" />
+ 			<h:outputScript library="codemirror" name="keymap/sublime.js" />
+		</h:head>
+		<h:body>
+		
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{editorBean.folder}" />
+    			<f:viewParam id="file" name="file" value="#{editorBean.file}" />
+				<f:viewAction action="#{editorBean.onLoad(2)}" />
+			</f:metadata>		
+		
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader" style="float: left;">
+					<a href="view.xhtml?folder=#{editorBean.folder}&amp;file=#{editorBean.file}" style="text-decoration: none; outline: none;">
+						<span id="spanHeaderTitle">Pug Showcase</span>
+						<span id="spanHeaderSubTitle">for PrimeFaces</span>
+					</a>	
+				</div>
+				<div style="float: right;">
+					<h:form>
+						<h:panelGrid columns="3" cellpadding="3">
+							<p:outputLabel value="#{editorBean.user.username}"/>
+							<h:outputLabel>|</h:outputLabel>
+							<p:commandLink action="#{loginPugBean.logoff}">Sair</p:commandLink>
+						</h:panelGrid>
+					</h:form>				
+				</div>
+				<div style="clear: both;">
+				</div>
+			</div>
+			<p:tabView id="tabView" widgetVar="tabView" rendered="#{editorBean.visibleEditor}" onTabShow="tabViewFocus()">
+		        <p:tab title="View (#{editorBean.file})">
+					<iframe id="iframeView" width="100%"  
+                       	height="100%" frameborder="0">  
+           			</iframe> 			        
+		        </p:tab>
+		        <p:tab id="tabNote2" title="Notas (Cliente)" rendered="#{editorBean.source.phtml.publish=='2' &amp;&amp; !(editorBean.user.level=='view')}">
+		        	<h:form id="formCommandNote2">
+						<p:growl id="growlNote2" showDetail="true" sticky="true"/>   
+						<p:inputTextarea id="textNote2" widgetVar="textNote2" style="display: none;" value="#{editorBean.source.note2.text}"/>
+ 						<p:panel style="margin-bottom: 10px;">
+	 						<h:panelGrid columns="4" cellpadding="5">
+	 							<p:outputLabel value="Atualização:"/>
+	 							<p:outputLabel id="note2DateUpdate" value="#{editorBean.source.note2.date}" style="color: #25AAE1"/>
+	 							<p:outputLabel value="Usuário:"/>
+	 							<p:outputLabel id="note2UserUpdate" value="#{editorBean.source.note2.user}" style="color: #25AAE1"/>
+	 						</h:panelGrid>
+ 						</p:panel>	
+  						<p:commandButton id="btnSaveNote2" widgetVar="btnSaveNote2" value="Salvar" icon="ui-icon-disk" actionListener="#{editorBean.saveNote2}" update="growlNote2 note2DateUpdate note2UserUpdate" style="margin-right: 5px; margin-bottom: 10px;"/>
+						<p:selectOneButton value="#{editorBean.source.note2.status}" onchange="changeBtnSave(true)">
+				            <f:selectItem itemLabel="Aguardando" itemValue="0" />
+				            <f:selectItem itemLabel="Aprovado" itemValue="1" />
+				            <f:selectItem itemLabel="Revisão" itemValue="2" />
+				            <f:selectItem itemLabel="Reprovado" itemValue="3" />
+				        </p:selectOneButton> 						  						
+		        	</h:form>
+					<p:outputPanel id="panelCodeNote2" style="height: 400px;" >
+		        		<article id="editorNote2">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodeNote2" />		        	
+		        </p:tab>		        
+			</p:tabView>
+						
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Showcase, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>

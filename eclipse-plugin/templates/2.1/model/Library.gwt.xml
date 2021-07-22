@@ -1,0 +1,8 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.pugsource.gwt.library.PugGWTLibrary"/>
+	<inherits name="com.pugsource.gwt.theme.pugblue.PugBlue"/>
+	<!-- <inherits name="com.pugsource.gwt.theme.pugdark.PugDark"/> -->
+	<!-- <inherits name="com.pugsource.gwt.theme.puggreen.PugGreen"/> -->
+	<stylesheet src="%className%.css"/>
+</module>

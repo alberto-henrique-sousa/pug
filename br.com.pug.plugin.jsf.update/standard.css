@@ -1,0 +1,52 @@
+.tableVersion {
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.tableVersion td, th {
+    border: 1px solid #BCC7CF; 
+    text-align: left;
+    padding: 8px;
+}
+
+.tableVersion tr:nth-child(even) {
+    background-color: #dddddd;
+}
+#divHeader {
+	padding-bottom: 10px; 
+	border-bottom: solid 1px #bcc7cf;
+}
+#divSubHeader {
+	font-family: 'latoregular', "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background-image: url("http://www.albertosousa.me/pug/resources/images/logoPugShowcase.png"); 
+	background-repeat: no-repeat; 
+	background-position: center right;
+	width: 320px;	
+}
+#spanHeaderTitle {
+	color: #5c666a; 
+	font-size: 30px; 
+	display: block !important;
+}
+#spanHeaderSubTitle {
+	color: #25aae1; 
+	font-size: 26px;
+}
+.ContentSideSections {
+    display: block;
+    border-top: solid 1px #bcc7cf;
+    border-bottom: solid 1px #bcc7cf;
+    padding: 10px 30px 10px 30px;
+}
+.gray {
+    color: #5C666A;
+}
+.floatLeft {
+    float: left;
+}
+.fontSize14 {
+    font-size: 14px;
+}
+.floatRight {
+    float: right;
+}

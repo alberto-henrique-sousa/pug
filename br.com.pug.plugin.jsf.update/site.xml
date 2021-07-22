@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/br.com.pug.plugin.jsf.feature_1.1.1.201611161014.jar" id="br.com.pug.plugin.jsf.feature" version="1.1.1.qualifier">
+      <category name="PugPlugin"/>
+   </feature>
+   <category-def name="PugPlugin" label="PugPlugin"/>
+</site>

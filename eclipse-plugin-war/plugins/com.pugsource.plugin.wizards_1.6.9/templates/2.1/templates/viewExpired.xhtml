@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view locale="#{localeBean.locale}" contentType="text/html">
+		<h:head>
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+		</h:head>
+		<h:body>
+		  	<div id="headerApp">
+		  		<div id="titleApp">
+		  			<h2><h:outputLabel>#{applicationBean.appName}</h:outputLabel></h2>
+		  		</div>
+		  		<div id="perfilApp">
+		 		  	<div>
+						<p:themeSwitcher value="#{applicationBean.theme}">
+							<f:selectItems value="#{themesBean.themes}" />
+						</p:themeSwitcher>
+					</div>
+		  		</div>
+		  	</div>
+				<p:panel>
+					<f:facet name="header">
+						#{messages.label_session_expired_title}
+					</f:facet>
+					<h:form>
+						<h:outputLink value="#{request.contextPath}#{currentViewId}">
+							#{messages.label_session_expired}
+						</h:outputLink>
+					</h:form>
+				</p:panel>
+		  	<div>
+				<ui:insert name="footer">
+					<ui:include src="footer.xhtml" />
+				</ui:insert>
+		  	</div>						
+		</h:body>
+	</f:view>
+</html>

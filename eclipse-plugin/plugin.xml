@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<!-- ======================================================== -->
+	<!-- Editors -->
+	<!-- ======================================================== -->
+   <!-- <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Pug GWT Form Editor"
+            extensions="form.xml"
+            icon="icons/wizards/crud/wizard.png"
+            contributorClass="com.pugsource.plugin.editors.crud.CRUDGWTPageEditorContributor"
+            class="com.pugsource.plugin.editors.crud.CRUDGWTPageEditor"
+            id="com.pugsource.plugin.editors.crud.CRUDGWTPageEditor">
+      </editor>
+   </extension>
+ -->
+	<!-- ======================================================== -->
+	<!-- Wizards -->
+	<!-- ======================================================== -->
+	<extension
+		point="org.eclipse.ui.newWizards">
+      <category
+            name="Pug Framework - JSF"
+            id="com.pugsource.plugin.jsf">
+      </category>
+      <category
+      		parentCategory="com.pugsource.plugin.jsf"
+            name="JSF"
+            id="com.pugsource.plugin.jsf.wizard">
+      </category>
+      <wizard
+            category="com.pugsource.plugin.jsf/com.pugsource.plugin.jsf.wizard"
+            class="com.pugsource.plugin.wizards.project.AddPugJSFWizard"
+            icon="icons/wizards/addpug/wizard.png"
+            id="com.pugsource.plugin.wizards.project.AddPugJSFWizard"
+            name="Add Pug">
+      </wizard>
+      <wizard
+            category="com.pugsource.plugin.jsf/com.pugsource.plugin.jsf.wizard"
+            class="com.pugsource.plugin.wizards.bean.BeanJSFWizard"
+            icon="icons/wizards/service/wizard.png"
+            id="com.pugsource.plugin.wizards.bean.BeanJSFWizard"
+            name="Bean">
+      </wizard>
+      <wizard
+            category="com.pugsource.plugin.jsf/com.pugsource.plugin.jsf.wizard"
+            class="com.pugsource.plugin.wizards.xhtml.XHTMLWizard"
+            icon="icons/wizards/crud/wizard.png"
+            id="com.pugsource.plugin.wizards.xhtml.XHTMLWizard"
+            name="CRUD">
+      </wizard>	      	      	      	
+	</extension>
+	
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Pug Framework - GWT"
+            id="com.pugsource.plugin.gwt">
+      </category>
+      <category
+      		parentCategory="com.pugsource.plugin.gwt"
+            name="GWT"
+            id="com.pugsource.plugin.gwt.wizard">
+      </category>
+      <wizard
+            category="com.pugsource.plugin.gwt/com.pugsource.plugin.gwt.wizard"
+            class="com.pugsource.plugin.wizards.crud.CRUDGWTWizard"
+            icon="icons/wizards/crud/wizard.png"
+            id="com.pugsource.plugin.wizards.crud.CRUDGWTWizard"
+            name="Forms">
+      </wizard>      
+      <wizard
+            category="com.pugsource.plugin.gwt/com.pugsource.plugin.gwt.wizard"
+            class="com.pugsource.plugin.wizards.dto.DTOGWTWizard"
+            icon="icons/wizards/dto/wizard.png"
+            id="com.pugsource.plugin.wizards.dto.DTOGWTWizard"
+            name="Class DTO">
+      </wizard>      
+      <wizard
+            category="com.pugsource.plugin.gwt/com.pugsource.plugin.gwt.wizard"
+            class="com.pugsource.plugin.wizards.service.ServiceGWTWizard"
+            icon="icons/wizards/service/wizard.png"
+            id="com.pugsource.plugin.wizards.service.ServiceGWTWizard"
+            name="Remote Service">
+      </wizard>
+      <wizard
+            category="com.pugsource.plugin.gwt/com.pugsource.plugin.gwt.wizard"
+            class="com.pugsource.plugin.wizards.module.ModuleGWTWizard"
+            icon="icons/wizards/module/wizard.png"
+            id="com.pugsource.plugin.wizards.module.ModuleGWTWizard"
+            name="Module">
+      </wizard>      
+      <wizard
+            category="com.pugsource.plugin.gwt/com.pugsource.plugin.gwt.wizard"
+            class="com.pugsource.plugin.wizards.library.LibraryGWTWizard"
+            icon="icons/wizards/library/wizard.png"
+            id="com.pugsource.plugin.wizards.library.LibraryGWTWizard"
+            name="Library">
+      </wizard>      
+      <wizard
+            category="com.pugsource.plugin.gwt/com.pugsource.plugin.gwt.wizard"
+            class="com.pugsource.plugin.wizards.project.AddPugGWTWizard"
+            icon="icons/wizards/addpug/wizard.png"
+            id="com.pugsource.plugin.wizards.project.AddPugGWTWizard"
+            name="Add Pug">
+      </wizard>
+   </extension>
+      
+	<!-- ======================================================== -->
+	<!-- Popup for new GWT things creation (module, entry point, service, etc) -->
+	<!-- ======================================================== -->
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution adaptable="true"
+			id="com.pugsource.plugin.jsf.objectContribution.all"
+			objectClass="org.eclipse.core.resources.IResource">
+			<menu id="com.pugsource.plugin.jsf.menu" label="Pug Framework - JSF"
+				path="group.new">
+				<separator name="JSF_project"/>
+				<separator name="JSF_service"/>
+				<separator name="JSF_guide"/>
+			</menu>
+		</objectContribution>	
+		<objectContribution adaptable="true"
+			id="com.pugsource.plugin.jsf.objectContribution.model"
+			objectClass="org.eclipse.jdt.core.IJavaElement">
+			<action id="com.pugsource.plugin.actions.model.NewMigrationGuideAction"
+				class="com.pugsource.plugin.actions.model.NewMigrationGuideAction"
+				label="Migration Guide" icon="icons/wizards/service/wizard.png"
+				menubarPath="com.pugsource.plugin.jsf.menu/JSF_guide"/>						
+			<action id="com.pugsource.plugin.actions.model.NewXHTMLAction"
+				class="com.pugsource.plugin.actions.model.NewXHTMLAction"
+				label="CRUD" icon="icons/wizards/crud/wizard.png"
+				menubarPath="com.pugsource.plugin.jsf.menu/JSF_service"/>			
+			<action id="com.pugsource.plugin.actions.model.NewBeanJSFAction"
+				class="com.pugsource.plugin.actions.model.NewBeanJSFAction"
+				label="Bean" icon="icons/wizards/service/wizard.png"
+				menubarPath="com.pugsource.plugin.jsf.menu/JSF_service"/>			
+			<action id="com.pugsource.plugin.actions.model.NewAddPugJSFAction"
+				class="com.pugsource.plugin.actions.model.NewAddPugJSFAction"
+				label="Add Pug" icon="icons/wizards/addpug/wizard.png"
+				menubarPath="com.pugsource.plugin.jsf.menu/JSF_project"/>			
+		</objectContribution>
+	</extension>
+	
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution adaptable="true"
+			id="com.pugsource.plugin.gwt.objectContribution.all"
+			objectClass="org.eclipse.core.resources.IResource">
+			<menu id="com.pugsource.plugin.gwt.menu" label="Pug Framework - GWT"
+				path="group.new">
+				<separator name="GWT_project"/>
+				<separator name="GWT_service"/>
+				<separator name="GWT_model"/>
+				<separator name="GWT_module"/>
+			</menu>
+		</objectContribution>	
+		<objectContribution adaptable="true"
+			id="com.pugsource.plugin.gwt.objectContribution.model"
+			objectClass="org.eclipse.jdt.core.IJavaElement">
+			<enablement>
+				<and>
+					<test property="com.google.gdt.eclipse.designer.isResource"
+						forcePluginActivation="true"/>
+					<test property="com.google.gdt.eclipse.designer.isGwtProjectElement"
+						forcePluginActivation="true"/>
+				</and>
+			</enablement>
+			<action id="com.pugsource.plugin.actions.model.NewModuleGWTAction"
+				class="com.pugsource.plugin.actions.model.NewModuleGWTAction"
+				label="Module" icon="icons/wizards/module/wizard.png"
+				menubarPath="com.pugsource.plugin.gwt.menu/GWT_module"/>
+			<action id="com.pugsource.plugin.actions.model.NewCRUDGWTAction"
+				class="com.pugsource.plugin.actions.model.NewCRUDGWTAction"
+				label="Forms" icon="icons/wizards/crud/wizard.png"
+				menubarPath="com.pugsource.plugin.gwt.menu/GWT_model"/>
+			<action id="com.pugsource.plugin.actions.model.NewServiceGWTAction"
+				class="com.pugsource.plugin.actions.model.NewServiceGWTAction"
+				label="Remote Service" icon="icons/wizards/service/wizard.png"
+				menubarPath="com.pugsource.plugin.gwt.menu/GWT_service"/>
+			<action id="com.pugsource.plugin.actions.model.NewDTOGWTAction"
+				class="com.pugsource.plugin.actions.model.NewDTOGWTAction"
+				label="Class DTO" icon="icons/wizards/dto/wizard.png"
+				menubarPath="com.pugsource.plugin.gwt.menu/GWT_service"/>
+			<action id="com.pugsource.plugin.actions.model.NewLibraryGWTAction"
+				class="com.pugsource.plugin.actions.model.NewLibraryGWTAction"
+				label="Library" icon="icons/wizards/library/wizard.png"
+				menubarPath="com.pugsource.plugin.gwt.menu/GWT_project"/>
+			<action id="com.pugsource.plugin.actions.model.NewAddPugGWTAction"
+				class="com.pugsource.plugin.actions.model.NewAddPugGWTAction"
+				label="Add Pug" icon="icons/wizards/addpug/wizard.png"
+				menubarPath="com.pugsource.plugin.gwt.menu/GWT_project"/>			
+		</objectContribution>
+	</extension>
+</plugin>

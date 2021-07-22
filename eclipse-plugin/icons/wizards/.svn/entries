@@ -1,0 +1,55 @@
+10
+
+dir
+107
+http://gwt-designer.googlecode.com/svn/trunk/com.google.gdt.eclipse.designer.wizards/icons/wizards
+http://gwt-designer.googlecode.com/svn
+
+
+
+2011-09-16T22:25:41.542809Z
+1
+shollyman@google.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fb01bb26-45d1-3581-a383-6b210d12dee7
+
+service
+dir
+
+Composite
+dir
+
+PopupPanel
+dir
+
+library
+dir
+
+module
+dir
+
+project
+dir
+
+DialogBox
+dir
+
+JUnit
+dir
+
+EntryPoint
+dir
+

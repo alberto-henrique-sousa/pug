@@ -1,0 +1,13 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.pugsource.gwt.theme.pugblue.PugBlue"/>
+	<!-- <inherits name="com.pugsource.gwt.theme.pugdark.PugDark"/> -->
+	<!-- <inherits name="com.pugsource.gwt.theme.puggreen.PugGreen"/> -->
+	<inherits name="com.pugsource.gwt.library.PugGWTLibrary"/>
+	<inherits name="com.google.gwt.json.JSON"/>
+	<inherits name="com.google.gwt.jsonp.Jsonp"/>		
+	%libraryXML%	
+	<entry-point class="%packageName%.client.%className%"/>
+	<extend-property name="locale" values="pt_BR"/>
+	<set-property-fallback name="locale" value="pt_BR"/>
+</module>

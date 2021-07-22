@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+		 xmlns:pe="http://primefaces.org/ui/extensions">
+	<f:view locale="pt-BR" contentType="text/html" encoding="UTF-8">
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link type="text/css" rel="stylesheet" href="standard.css?_=1478869917417" />
+			<script type="text/javascript" src="standard.js?_=1478869917417"></script>
+		</h:head>
+		<h:body onload="init()">
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{pugBean.folder}" />
+    			<f:viewParam id="file" name="file" value="#{pugBean.file}" />
+				<f:viewAction action="#{pugBean.onload()}" />
+			</f:metadata>
+<h:form prependId="false" id="empresasGrowlForm">
+    <p:messages id="empresasGrowl" showDetail="false" autoUpdate="true" closable="true"/>
+</h:form>		
+<h:form id="empresasDataForm" enctype="multipart/form-data">
+    <p:panel id="empresasPanelData">
+        <f:facet name="header">
+            <h:outputText value="Tabela de #{pugBean.java.title}" />
+        </f:facet>
+        <div class="formActiosLeft">
+            <h:outputText value="&#160;" />
+        </div>
+        <div class="formActionsRight">
+            <p:commandButton id="empresasButtonNew" icon="ui-icon ui-icon-document" title="#{messages.label_create_hint}" actionListener="#{pugBean.java.showCreate}" update=":empresasDataForm:empresasPanelData :empresasGrowlForm:empresasGrowl" rendered="#{!pugBean.java.form}"/>
+        </div>
+
+        <div class="divDataTable">
+            <p:dataTable id="empresasDataGrid" var="dataEmpresa" value="#{pugBean.java.empresasLazy}" 						
+                draggableColumns="true"  
+                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                currentPageReportTemplate="(#{messages.label_datatable_page} {currentPage} #{messages.label_datatable_interval} {totalPages} - {totalRecords} #{messages.label_datatable_records})"
+                rowsPerPageTemplate="5,10,15,25,50,100" lazy="false"
+                rowKey="#{dataEmpresa.id}" paginator="true" rows="#{rowsGrid == null ? '10' : rowsGrid}" selectionMode="single"
+                sortBy="#{dataEmpresa.nome}" sortOrder="ASCENDING" rendered="#{!pugBean.java.form}">
+
+                <p:column headerText="Nome" sortBy="#{dataEmpresa.nome}" filterBy="#{dataEmpresa.nome}">
+                    <h:outputText value="#{dataEmpresa.nome}" />
+                </p:column>
+                <p:column headerText="Ativo" sortBy="#{dataEmpresa.ativo}">
+                    <h:selectBooleanCheckbox value="#{dataEmpresa.ativo}"  disabled="true"/>
+                </p:column>
+
+                <p:column styleClass="action-column">
+                    <p:commandButton id="empresasViewButton" icon="ui-icon-zoomin" title="#{messages.label_view_hint}" actionListener="#{pugBean.java.showView}" update=":empresasDataForm:empresasPanelData :empresasGrowlForm:empresasGrowl">
+                        <f:setPropertyActionListener value="#{dataEmpresa}" target="#{pugBean.java.empresas}" />
+                    </p:commandButton>
+                    <p:commandButton id="empresasEditButton" icon="ui-icon-pencil" title="#{messages.label_edit_hint}" actionListener="#{pugBean.java.showEdit}" update=":empresasDataForm:empresasPanelData :empresasGrowlForm:empresasGrowl">
+                        <f:setPropertyActionListener value="#{dataEmpresa}" target="#{pugBean.java.empresas}" />
+                    </p:commandButton>
+                    <p:commandButton id="empresasDeleteButton" icon="ui-icon-trash" title="#{messages.label_delete}" onclick="PF('empresasDeleteDialogWidget').show();">
+                        <f:setPropertyActionListener value="#{dataEmpresa}" target="#{pugBean.java.empresas}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column styleClass="action-column-select" rendered="#{select}">
+                    <p:commandButton id="empresasSelectButton" icon="ui-icon-check" title="#{messages.label_select_hint}" action="#{pugBean.java.closeDialog}">
+                        <f:setPropertyActionListener value="#{dataEmpresa}" target="#{pugBean.java.empresas}"/>
+                    </p:commandButton>
+                </p:column>																																										
+            </p:dataTable>
+
+        </div>
+
+        <p:panel id="empresasPanelForm" header="#{pugBean.java.titlePanelForm}" rendered="#{pugBean.java.form}">
+            <h:panelGrid id="empresasPanelGrid" columns="3">
+                <h:outputLabel id="empresasLabelId" for="id" value="Id:" />
+                <p:inputMask id="id" label="Id:" value="#{pugBean.java.empresas.id}" readonly="true"/>
+                <p:message id="empresasMsgErrorId" for="id" display="icon, text"/>
+                <h:outputLabel id="empresasLabelNome" for="nome" value="Nome:" />
+                <p:inputMask id="nome" label="Nome:" value="#{pugBean.java.empresas.nome}" readonly="#{pugBean.java.view}" required="true" requiredMessage="NecessÃ¡rio informar o Nome." maxlength="60" style="width: 400px;"/>
+                <p:message id="empresasMsgErrorNome" for="nome" display="icon, text"/>
+                <h:outputLabel id="empresasLabelEndereco" for="endereco" value="Endereço:" />
+                <p:inputMask id="endereco" label="Endereço:" value="#{pugBean.java.empresas.endereco}" readonly="#{pugBean.java.view}" maxlength="60" style="width: 400px;"/>
+                <p:message id="empresasMsgErrorEndereco" for="endereco" display="icon, text"/>
+                <h:outputLabel id="empresasLabelBairro" for="bairro" value="Bairro:" maxlength="40" style="width: 250px;"/>
+                <p:inputMask id="bairro" label="Bairro:" value="#{pugBean.java.empresas.bairro}" readonly="#{pugBean.java.view}"/>
+                <p:message id="empresasMsgErrorBairro" for="bairro" display="icon, text"/>
+                <h:outputLabel id="empresasLabelCidade" for="cidade" value="Cidade:" />
+                <p:inputMask id="cidade" label="Cidade:" value="#{pugBean.java.empresas.cidade}" readonly="#{pugBean.java.view}" maxlength="40" style="width: 250px;"/>
+                <p:message id="empresasMsgErrorCidade" for="cidade" display="icon, text"/>
+                <h:outputLabel id="empresasLabelUf" for="uf" value="UF:" />
+                <p:inputMask id="uf" label="UF:" value="#{pugBean.java.empresas.uf}" readonly="#{pugBean.java.view}" maxlength="2" style="width: 40px;"/>
+                <p:message id="empresasMsgErrorUf" for="uf" display="icon, text"/>
+                <h:outputLabel id="empresasLabelTelefones" for="telefones" value="Telefones:" />
+                <p:inputMask id="telefones" label="Telefones:" value="#{pugBean.java.empresas.telefones}" readonly="#{pugBean.java.view}" maxlength="60" style="width: 350px;"/>
+                <p:message id="empresasMsgErrorTelefones" for="telefones" display="icon, text"/>
+                <h:outputLabel id="empresasLabelEmail" for="email" value="e-Mail:" />
+                <p:inputMask id="email" label="e-Mail:" value="#{pugBean.java.empresas.email}" readonly="#{pugBean.java.view}" maxlength="100" style="width: 550px;"/>
+                <p:message id="empresasMsgErrorEmail" for="email" display="icon, text"/>
+                <h:outputLabel id="empresasLabelSite" for="site" value="Site:" />
+                <p:inputMask id="site" label="Site:" value="#{pugBean.java.empresas.site}" readonly="#{pugBean.java.view}" maxlength="100" style="width: 550px;"/>
+                <p:message id="empresasMsgErrorSite" for="site" display="icon, text"/>
+                <h:outputLabel id="empresasLabelAnotacoes" for="anotacoes" value="Anotações:" />
+                <p:inputTextarea id="anotacoes" label="Anotações:" value="#{pugBean.java.empresas.anotacoes}" disabled="#{pugBean.java.view}" rows="5" cols="60" autoResize="false"/>
+                <p:message id="empresasMsgErrorAnotacoes" for="anotacoes" display="icon, text"/>
+                <h:outputLabel id="empresasLabelAtivo" for="ativo" value="Ativo:" />
+                <p:selectBooleanCheckbox id="ativo" label="Ativo:" value="#{pugBean.java.empresas.ativo}" disabled="#{pugBean.java.view}"/>
+                <p:message id="empresasMsgErrorAtivo" for="ativo" display="icon, text"/>
+                <p:focus for="nome"/>			        
+            </h:panelGrid>
+            <p:commandButton id="empresasSaveButton" value="#{messages.label_save}" actionListener="#{pugBean.java.save}" update=":empresasDataForm:empresasPanelData :empresasGrowlForm:empresasGrowl" icon="ui-icon-check" rendered="#{!pugBean.java.view}"/>
+            <p:commandButton id="empresasCancelButton" value="#{!pugBean.java.view ? messages.label_cancel : messages.label_back}" actionListener="#{pugBean.java.showGrid}" icon="ui-icon-close" update=":empresasDataForm:empresasPanelData :empresasGrowlForm:empresasGrowl" immediate="true"/>
+        </p:panel>		
+
+    </p:panel>			
+</h:form>
+
+<p:confirmDialog id="empresasDeleteDialog" widgetVar="empresasDeleteDialogWidget" message="#{messages.label_confirm_deletion}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_header}">
+    <p:outputPanel id="empresasdeletePanel">
+        <h:form id="empresasdeleteForm">
+            <p:commandButton id="empresasdeleteYesButton" value="#{messages.label_yes}" actionListener="#{pugBean.java.delete}" update=":empresasDataForm:empresasPanelData :empresasGrowlForm:empresasGrowl" oncomplete="PF('empresasDeleteDialogWidget').hide()" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton id="empresasdeleteNoButton" value="#{messages.label_no}" onclick="PF('empresasDeleteDialogWidget').hide()" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+        </h:form>
+    </p:outputPanel>
+</p:confirmDialog>
+
+		</h:body>
+	</f:view>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+		 xmlns:pe="http://primefaces.org/ui/extensions">
+	<f:view locale="pt-BR" contentType="text/html" encoding="UTF-8">
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link type="text/css" rel="stylesheet" href="standard.css?_=1478869976649" />
+			<script type="text/javascript" src="standard.js?_=1478869976649"></script>
+		</h:head>
+		<h:body onload="init()">
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{pugBean.folder}" />
+    			<f:viewParam id="file" name="file" value="#{pugBean.file}" />
+				<f:viewAction action="#{pugBean.onload()}" />
+			</f:metadata>
+<div id="headerApp">
+    <div id="titleApp">
+        <h2><h:outputLabel>#{applicationBean.appName}</h:outputLabel></h2>
+    </div>
+    <div id="perfilApp">
+        <div>
+            <p:themeSwitcher value="#{applicationBean.theme}">
+                <f:selectItems value="#{themesBean.themes}" />
+            </p:themeSwitcher>
+        </div>
+    </div>
+</div>
+<div style="text-align: center;">
+    <p:tooltip />
+    <div style="width: 350px; margin-left: auto; margin-right: auto;">
+        <h:form prependId="false" id="growlForm">
+            <p:messages id="growl" showDetail="false" autoUpdate="true" closable="true"/>
+        </h:form>		
+        <h:form id="dataForm" enctype="multipart/form-data" >
+            <p:panel id="panelForm" header="#{messages.label_login}">
+                <h:panelGrid id="genericPanelGrid" columns="3">
+                    <h:outputLabel id="labelNome" for="nome" value="#{messages.label_username}" />
+                    <p:inputMask id="nome" label="Nome" required="true" value="#{loginBean.nome}" maxlength="60" style="width: 250px;"/>					        	
+                    <p:message id="msgErrorNome" for="nome" display="tooltip"/>					        	
+                    <h:outputLabel id="labelSenha" for="senha" value="#{messages.label_password}" />
+                    <p:password id="senha" label="Senha" required="true" value="#{loginBean.senha}" maxlength="60" style="width: 250px;"/>
+                    <p:message id="msgErrorSenha" for="senha" display="tooltip"/>								
+                    <p:focus for="nome"/>
+                </h:panelGrid>						
+                <p:commandButton id="loginButton" value="#{messages.label_login}" action="#{loginBean.login}" update=":dataForm:panelForm :growlForm:growl" icon="ui-icon-check" ajax="false"/>	        		
+            </p:panel>
+        </h:form>
+    </div>
+</div>
+
+		</h:body>
+	</f:view>
+</html>

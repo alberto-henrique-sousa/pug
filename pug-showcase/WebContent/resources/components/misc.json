@@ -1,0 +1,8 @@
+[
+	{
+		"name" : "outputlabel",
+		"shortName" : "label",
+		"syntax" : "<p:outputLabel ?>\n</p:outputLabel>",
+		"attributes" : "" 
+	}		 			
+]	

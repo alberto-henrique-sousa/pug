@@ -1,0 +1,418 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8"> 
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+			<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+      					
+			<h:outputStylesheet library="codemirror" name="lib/codemirror.css" />
+			<h:outputStylesheet library="codemirror" name="addon/fold/foldgutter.css" />
+			<h:outputStylesheet library="codemirror" name="addon/dialog/dialog.css" />
+			<h:outputStylesheet library="codemirror" name="addon/display/fullscreen.css" />
+			<h:outputStylesheet library="codemirror" name="addon/hint/show-hint.css" />
+			
+			<h:outputStylesheet library="css" name="standard2.css" />
+
+			<h:outputScript library="scripts" name="pug-editor.js?_=09112016" />
+			<h:outputScript library="codemirror" name="lib/codemirror.js" />
+ 			<h:outputScript library="codemirror" name="mode/xml/xml.js" /> 
+ 			<h:outputScript library="codemirror" name="mode/htmlmixed/htmlmixed.js" /> 
+ 			<h:outputScript library="codemirror" name="mode/css/css.js" /> 
+ 			<h:outputScript library="codemirror" name="mode/javascript/javascript.js" /> 
+ 			<h:outputScript library="codemirror" name="addon/fold/xml-fold.js" />
+ 			<h:outputScript library="codemirror" name="addon/edit/closetag.js" />
+ 			<h:outputScript library="codemirror" name="addon/search/searchcursor.js" />
+ 			<h:outputScript library="codemirror" name="addon/search/search.js" />
+ 			<h:outputScript library="codemirror" name="addon/dialog/dialog.js" />
+ 			<h:outputScript library="codemirror" name="addon/edit/matchbrackets.js" />
+ 			<h:outputScript library="codemirror" name="addon/edit/closebrackets.js" />
+ 			<h:outputScript library="codemirror" name="addon/comment/comment.js" />
+ 			<h:outputScript library="codemirror" name="addon/wrap/hardwrap.js" />
+ 			<h:outputScript library="codemirror" name="addon/fold/foldcode.js" />
+ 			<h:outputScript library="codemirror" name="addon/fold/brace-fold.js" />
+ 			<h:outputScript library="codemirror" name="addon/display/fullscreen.js" />
+ 			<h:outputScript library="codemirror" name="addon/hint/show-hint.js" />
+ 			<h:outputScript library="codemirror" name="addon/hint/xml-hint.js" />
+ 			<h:outputScript library="codemirror" name="keymap/sublime.js" />
+ 			<h:outputScript library="scripts" name="prime-faces-hint.js" />			
+ 			<h:outputScript library="codemirror" name="mode/clike/clike.js" /> 
+		</h:head>
+		<h:body onload="init()">
+		
+			<f:metadata>
+    			<f:viewParam id="folder" name="folder" value="#{editorBean.folder}" />
+    			<f:viewParam id="file" name="file" value="#{editorBean.file}" />
+				<f:viewAction action="#{editorBean.onLoad(1)}" />
+			</f:metadata>		
+		
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader" style="float: left;">
+					<a href="editor.xhtml" style="text-decoration: none; outline: none;">
+						<span id="spanHeaderTitle">Pug Showcase</span>
+						<span id="spanHeaderSubTitle">for PrimeFaces</span>
+					</a>
+				</div>
+				<div style="float: right;">
+					<h:form>
+						<h:panelGrid columns="7" cellpadding="3">
+							<p:outputLabel value="#{editorBean.user.username}"/>
+							<h:outputLabel>|</h:outputLabel>
+							<p:commandLink oncomplete="PF('dialogEditUser').show()">senha
+								<f:setPropertyActionListener value="#{editorBean.user}" target="#{managerBean.user}" />
+							</p:commandLink>
+							<h:outputLabel>|</h:outputLabel>
+							<p:outputLabel value="#{editorBean.user.level}"/>
+							<h:outputLabel>|</h:outputLabel>
+							<p:commandLink action="#{loginPugBean.logoff}">sair</p:commandLink>
+						</h:panelGrid>
+					</h:form>				
+				</div>
+				<div style="clear: both;">
+				</div>
+			</div>
+			<p:panel id="panelExplorer" widgetVar="panelExplorer" header="Projetos Explorer (#{editorBean.folder})" toggleable="true">
+				<h:form id="formExplorer">
+					<p:growl id="growlExplorer" showDetail="true" sticky="true"/>  
+					<p:treeTable value="#{editorBean.explorer}" var="document" selectionMode="single" sortBy="#{document.name}">
+				        <p:column headerText="Nome">
+				            <h:outputText value="#{document.name}" />
+				        </p:column>
+				        <p:column headerText="Abrir">
+							<p:link outcome="editor.xhtml" value="#{document.name}" rendered="#{!document.folder}">
+							    <f:param name="folder" value="#{document.folderName}"/>
+							    <f:param name="file" value="#{document.name}"/>
+							</p:link>				        
+				        </p:column>
+				        <p:column style="width:130px" headerText="Publicação">
+				        	<h:outputText value="#{document.publishText}" style="color: #{document.publishColor}" />
+				        </p:column>
+				        <p:column style="width:120px" headerText="Status">
+				        	<h:outputText value="#{document.statusText}" style="color: #{document.statusColor}"/>
+				        </p:column>
+				        <p:column style="width:140px">
+							<div style="float: left;">								
+								<p:link title="Abrir layout" outcome="editor.xhtml" value="#{document.name}" rendered="#{!document.folder}" styleClass="ui-icon ui-icon-folder-open" style="margin-right: 10px">
+								    <f:param name="folder" value="#{document.folderName}"/>
+								    <f:param name="file" value="#{document.name}"/>
+								</p:link>				        
+							</div>					        
+							<div style="float: left;">								
+								<p:commandLink title="Novo layout" style="margin-right: 10px" rendered="#{document.btnCreateLayout}" styleClass="ui-icon ui-icon-document" update="formNewLayout:folderNewLayout" oncomplete="PF('inputNewLayoutDialog').show()" >
+									<f:setPropertyActionListener value="#{document}" target="#{editorBean.selectedDocument}" />
+								</p:commandLink>
+							</div>	
+							<div style="float: left;">								
+								<p:commandLink title="Nova pasta" style="margin-right: 10px" rendered="#{document.btnCreateFolder}" styleClass="ui-icon ui-icon-folder-collapsed" update="formNewFolder:folderNewFolder" oncomplete="PF('inputNewFolderDialog').show()">
+									<f:setPropertyActionListener value="#{document}" target="#{editorBean.selectedDocument}" />
+								</p:commandLink>
+							</div>	
+							<div style="float: left;">								
+								<p:commandLink title="Renomear" rendered="#{document.btnRename}" style="margin-right: 10px" styleClass="ui-icon ui-icon-pencil" update="formRename:folderRenameFile" oncomplete="PF('inputRenameDialog').show()">
+									<f:setPropertyActionListener value="#{document}" target="#{editorBean.selectedDocument}" />
+								</p:commandLink>
+							</div>	
+							<div style="float: left;">								
+								<p:commandLink title="Excluir" id="btnDeleteFile" rendered="#{document.btnDelete}" style="margin-right: 10px" styleClass="ui-icon ui-icon-closethick" action="#{editorBean.deleteFile}" update="formExplorer:growlExplorer">
+									<p:confirm header="Confirmação" message="'#{document.name}' excluir?" icon="ui-icon-alert"/>
+									<f:setPropertyActionListener value="#{document}" target="#{editorBean.selectedDocument}" />
+								</p:commandLink>
+							</div>					        	
+							<div>								
+								<p:link title="View" target="_blank" outcome="view.xhtml" rendered="#{document.btnViewLayout}" value="#{document.link}" styleClass="ui-icon ui-icon-search">
+								    <f:param name="folder" value="#{document.folderName}"/>
+								    <f:param name="file" value="#{document.name}"/>
+								</p:link>				        
+							</div>					        	
+							<div>								
+								<p:link title="View" target="_blank" outcome="index.xhtml" rendered="#{document.btnViewFolder}" value="#{document.folderName}" styleClass="ui-icon ui-icon-search">
+								    <f:param name="folder" value="#{document.folderName}"/>
+								</p:link>				        
+							</div>					        	
+				        </p:column>
+				    </p:treeTable>
+				    
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				    </p:confirmDialog>				    				    
+														    				
+				</h:form>
+			</p:panel>
+			
+			<p:dialog id="inputNewLayoutDialog" header="Novo layout" showEffect="fade" widgetVar="inputNewLayoutDialog" modal="true" resizable="false">
+				<h:form id="formNewLayout">
+					<p:growl id="growNewLayout" showDetail="true" sticky="true"/>  
+					<h:outputLabel id="folderNewLayout" style="padding-left: 5px;" value="Pasta: ${editorBean.selectedDocument.name}"/>
+					<h:panelGrid columns="3" cellpadding="5">
+						<h:outputLabel for="inputNewLayoutName" value="Nome:" style="font-weight:bold" />
+						<p:inputText id="inputNewLayoutName" value="#{editorBean.fileNewLayout}" style="width: 300px;" styleClass="width 200px;"/>
+						<p:commandButton id="btnNewLayout" value="Criar" icon="ui-icon-check" update="growNewLayout" action="#{editorBean.createLayout}"/>
+					</h:panelGrid>
+				</h:form>							
+			</p:dialog>
+			
+			<p:dialog id="inputNewFolderDialog" header="Nova pasta" showEffect="fade" widgetVar="inputNewFolderDialog" modal="true" resizable="false">
+				<h:form id="formNewFolder">
+					<p:growl id="growNewFolder" showDetail="true" sticky="true"/>  
+					<h:outputLabel id="folderNewFolder" style="padding-left: 5px;" value="Pasta: ${editorBean.selectedDocument.name}"/>
+					<h:panelGrid columns="3" cellpadding="5">
+						<h:outputLabel for="inputNewFolderName" value="Nome:" style="font-weight:bold" />
+						<p:inputText id="inputNewFolderName" value="#{editorBean.fileNewFolder}" style="width: 300px;" styleClass="width 200px;"/>
+						<p:commandButton id="btnNewFolder" value="Criar" icon="ui-icon-check" update="growNewFolder" actionListener="#{editorBean.createFolder}"/>
+					</h:panelGrid>
+				</h:form>							
+			</p:dialog>
+			
+			<p:dialog id="inputRenameDialog" header="Renomear" showEffect="fade" widgetVar="inputRenameDialog" modal="true" resizable="false">
+				<h:form id="formRename">
+					<p:growl id="growRename" showDetail="true" sticky="true"/>  
+					<h:outputLabel id="folderRenameFile" style="padding-left: 5px;" value="Nome: ${editorBean.selectedDocument.name}"/>
+					<h:panelGrid columns="3" cellpadding="5">
+						<h:outputLabel for="inputRenameName" value="Nome:" style="font-weight:bold" />
+						<p:inputText id="inputRenameName" value="#{editorBean.fileRename}" style="width: 300px;" styleClass="width 200px;"/>
+						<p:commandButton id="btnRename" value="Renomear" icon="ui-icon-check" update="growRename" action="#{editorBean.renameFile}"/>
+					</h:panelGrid>
+				</h:form>								
+			</p:dialog>								
+			
+			<p:tabView id="tabView" widgetVar="tabView" rendered="#{editorBean.visibleEditor}" onTabShow="tabViewFocus()">
+		        <p:tab title="#{editorBean.file}.xhtml" id="tabXHTML">
+					<h:form id="formCommandPHTML">
+						<p:growl id="growlPHTML" showDetail="true" sticky="true"/>   
+ 						<p:inputTextarea id="textPHTML1" widgetVar="textPHTML1" style="display: none;" value="#{editorBean.source.phtml.xhtml}"/>
+ 						<p:inputTextarea id="textJava2" widgetVar="textJava2" style="display: none;" value="#{editorBean.source.phtml.java}"/>
+ 						<p:panel style="margin-bottom: 10px;">
+	 						<h:panelGrid columns="4" cellpadding="5">
+	 							<p:outputLabel value="Atualização:"/>
+	 							<p:outputLabel id="phtmlDateUpdate" value="#{editorBean.source.phtml.dateUpdate}" style="color: #25AAE1"/>
+	 							<p:outputLabel value="Usuário:"/>
+	 							<p:outputLabel id="phtmlUserUpdate" value="#{editorBean.source.phtml.userUpdate}" style="color: #25AAE1"/>
+	 						</h:panelGrid>
+ 						</p:panel>	
+ 						<p:commandButton id="btnSavePHTML" widgetVar="btnSavePHTML" value="Salvar" icon="ui-icon-disk" actionListener="#{editorBean.savePHTML}" update="growlPHTML phtmlDateUpdate phtmlUserUpdate tabView:formCommandJava:javaDateUpdate tabView:formCommandJava:javaUserUpdate tabView:formCommandJava:msgConsole" style="margin-right: 5px; margin-top: 10px;"/>
+ 						<p:commandButton value="Salvar todos" icon="ui-icon-disk" actionListener="#{editorBean.saveAll}" style="margin-right: 5px;" update="growlPHTML phtmlDateUpdate phtmlUserUpdate tabView:formCommandJava:javaDateUpdate tabView:formCommandJava:javaUserUpdate tabView:formCommandJava:msgConsole"/>
+				        <p:commandButton id="btnCopy" actionListener="#{editorBean.copy}" icon="ui-icon-clipboard" value="Copiar" style="margin-right: 5px;" update="growlPHTML @form"/> 						
+				        <p:commandButton id="btnPaste" actionListener="#{editorBean.paste}" icon="ui-icon-copy" value="Colar" style="margin-right: 10px;" update="growlPHTML">
+							<p:confirm header="Confirmação" message="Os códigos atuais XTML e Java serão substituídos, continuar?" icon="ui-icon-alert"/>
+				        </p:commandButton> 						
+						<p:selectOneButton value="#{editorBean.source.phtml.publish}" style="margin-right: 10px;" onchange="changeBtnSave(true)">
+				            <f:selectItem itemLabel="Concepção/Oculto" itemValue="0" />
+				            <f:selectItem itemLabel="Desenvolvimento" itemValue="1" />
+				            <f:selectItem itemLabel="Homologação" itemValue="2" />
+				        </p:selectOneButton>
+					</h:form>
+					<p:outputPanel id="panelCodePHTML" style="height: 400px;" >
+		        		<article id="editorPHTML">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodePHTML" />
+		        </p:tab>
+		        <p:tab title="#{editorBean.file}.java" id="tabJava">
+					<h:form id="formCommandJava">
+						<p:growl id="growlJava" showDetail="true" sticky="true"/>   
+ 						<p:inputTextarea id="textPHTML2" widgetVar="textPHTML2" style="display: none;" value="#{editorBean.source.phtml.xhtml}"/>
+ 						<p:inputTextarea id="textJava1" widgetVar="textJava1" style="display: none;" value="#{editorBean.source.phtml.java}"/>
+ 						<p:panel style="margin-bottom: 10px;">
+	 						<h:panelGrid columns="4" cellpadding="5">
+	 							<p:outputLabel value="Atualização:"/>
+	 							<p:outputLabel id="javaDateUpdate" value="#{editorBean.source.phtml.dateUpdate}" style="color: #25AAE1"/>
+	 							<p:outputLabel value="Usuário:"/>
+	 							<p:outputLabel id="javaUserUpdate" value="#{editorBean.source.phtml.userUpdate}" style="color: #25AAE1"/>
+	 						</h:panelGrid>
+					        <h:outputText id="msgConsole" style="color: red;" value="#{editorBean.console}" />
+ 						</p:panel>	
+ 						<p:commandButton id="btnSaveJava" widgetVar="btnSaveJava" value="Salvar" icon="ui-icon-disk" actionListener="#{editorBean.savePHTML}" update="growlJava javaDateUpdate javaUserUpdate tabView:formCommandPHTML:phtmlDateUpdate tabView:formCommandPHTML:phtmlUserUpdate tabView:formCommandJava:msgConsole" style="margin-right: 5px; margin-top: 10px"/>
+ 						<p:commandButton value="Salvar todos" icon="ui-icon-disk" actionListener="#{editorBean.saveAll}" style="margin-right: 10px;" update="growlJava javaDateUpdate javaUserUpdate tabView:formCommandPHTML:phtmlDateUpdate tabView:formCommandPHTML:phtmlUserUpdate tabView:formCommandJava:msgConsole"/>
+					</h:form>
+					<p:outputPanel id="panelCodeJava" style="height: 400px;" >
+		        		<article id="editorJava">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodeJava" />
+		        </p:tab>
+		        <p:tab title="standard.css" id="tabCSS">
+					<h:form id="formCommandCSS">
+						<p:growl id="growlCSS" showDetail="true" sticky="true"/>   
+ 						<p:inputTextarea id="textCSS" widgetVar="textCSS" style="display: none;" value="#{editorBean.source.css}"/>
+ 						<p:commandButton id="btnSaveCSS" widgetVar="btnSaveCSS" value="Salvar" icon="ui-icon-disk" actionListener="#{editorBean.saveCSS}" update="growlCSS" style="margin-right: 5px;"/>
+ 						<p:commandButton value="Salvar todos" icon="ui-icon-disk" actionListener="#{editorBean.saveAll}" style="margin-right: 5px;"/>
+					</h:form>
+					<p:outputPanel id="panelCodeCSS" style="height: 400px;" >
+		        		<article id="editorCSS">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodeCSS" />
+		        </p:tab>
+		        <p:tab title="standard.js" id="tabJS">
+					<h:form id="formCommandJS">
+						<p:growl id="growlJS" showDetail="true" sticky="true"/>   
+ 						<p:inputTextarea id="textJS" widgetVar="textJS" style="display: none;" value="#{editorBean.source.js}"/>
+ 						<p:commandButton id="btnSaveJS" widgetVar="btnSaveJS" value="Salvar" icon="ui-icon-disk" actionListener="#{editorBean.saveJS}" update="growlJS" style="margin-right: 5px;"/>
+ 						<p:commandButton value="Salvar todos" icon="ui-icon-disk" actionListener="#{editorBean.saveAll}" style="margin-right: 5px;"/>
+					</h:form>
+					<p:outputPanel id="panelCodeJS" style="height: 400px;" >
+		        		<article id="editorJS">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodeJS" />
+		        </p:tab>
+		        <p:tab title="notas (dev)" id="tabNote1">
+		        	<h:form id="formCommandNote1">
+						<p:growl id="growlNote1" showDetail="true" sticky="true"/>   
+ 						<p:inputTextarea id="textNote1" widgetVar="textNote1" style="display: none;" value="#{editorBean.source.note1.text}"/>
+ 						<p:panel style="margin-bottom: 10px;">
+	 						<h:panelGrid columns="4" cellpadding="5">
+	 							<p:outputLabel value="Atualização:"/>
+	 							<p:outputLabel id="note1DateUpdate" value="#{editorBean.source.note1.date}" style="color: #25AAE1"/>
+	 							<p:outputLabel value="Usuário:"/>
+	 							<p:outputLabel id="note1UserUpdate" value="#{editorBean.source.note1.user}" style="color: #25AAE1"/>
+	 						</h:panelGrid>
+ 						</p:panel>	
+ 						<p:commandButton id="btnSaveNote1" widgetVar="btnSaveNote1" value="Salvar" icon="ui-icon-disk" actionListener="#{editorBean.saveNote1}" update="growlNote1 note1DateUpdate note1UserUpdate" style="margin-right: 5px;"/>
+ 						<p:commandButton value="Salvar todos" icon="ui-icon-disk" actionListener="#{editorBean.saveAll}" style="margin-right: 5px;" update="growlNote1 note1DateUpdate note1UserUpdate"/>
+		        	</h:form>
+					<p:outputPanel id="panelCodeNote1" style="height: 400px;" >
+		        		<article id="editorNote1">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodeNote1" />
+		        </p:tab>
+		        <p:tab title="notas (cliente)" id="tabNote2">
+		        	<h:form id="formCommandNote2">
+						<p:growl id="growlNote2" showDetail="true" sticky="true"/>   
+ 						<p:inputTextarea id="textNote2" widgetVar="textNote2" style="display: none;" value="#{editorBean.source.note2.text}"/>
+ 						<p:panel style="margin-bottom: 10px;">
+	 						<h:panelGrid columns="4" cellpadding="5">
+	 							<p:outputLabel value="Atualização:"/>
+	 							<p:outputLabel value="#{editorBean.source.note2.date}" style="color: #25AAE1"/>
+	 							<p:outputLabel value="Usuário:"/>
+	 							<p:outputLabel value="#{editorBean.source.note2.user}" style="color: #25AAE1"/>
+	 						</h:panelGrid>
+ 						</p:panel>
+						<p:selectOneButton value="#{editorBean.source.note2.status}" disabled="true">
+				            <f:selectItem itemLabel="Aguardando" itemValue="0" />
+				            <f:selectItem itemLabel="Aprovado" itemValue="1" />
+				            <f:selectItem itemLabel="Revisão" itemValue="2" />
+				            <f:selectItem itemLabel="Reprovado" itemValue="3" />
+				        </p:selectOneButton> 						 							
+		        	</h:form>
+					<p:outputPanel id="panelCodeNote2" style="height: 400px;" >
+		        		<article id="editorNote2">
+		        		</article>
+					</p:outputPanel>
+					<p:resizable for="panelCodeNote2" />
+		        </p:tab>
+		        <p:tab title="view">
+		        	<h:form>
+ 						<p:commandButton id="btnRefreshIFrame" widgetVar="btnRefreshIFrame" title="Atualizar" icon="ui-icon-arrowrefresh-1-e" actionListener="#{editorBean.refreshIFrame}" style="margin-right: 5px;"/>
+		        	</h:form>
+					<iframe id="iframeView" width="100%"  
+                       	height="100%" frameborder="0">  
+           			</iframe> 			        
+		        </p:tab>
+		        
+		        <p:tab title="ajuda" titleStyleClass="tab-doc docslide-556" >
+		          <table class="tableKeypress">
+					  <tr>
+					    <th>Código</th>
+					    <th>Descrição</th>
+					  </tr>
+					  <tr><td>Utils.console("mensagem");</td><td>Envia por meio do bean uma mensagem para o console do navegador. <br/><span style="color: #708">import</span> <span style="color: black">com.pugsource.bean.Utils;</span></td></tr>
+					  <tr><td>Utils.loadClass("nome", this);</td><td>Carrega uma classe que faz parte da mesma pasta do projeto. O método retorna uma instância da classe. <br/><span style="color: #708">import</span> <span style="color: black">com.pugsource.bean.Utils;</span></td></tr>
+					  <tr><td>ApplicationBean</td><td>Bean de compatibilidade com o Pug Plugin.<br/><span style="color: #708">theme (String)</span><br/><span style="color: #708">usuarios (String)</span><br/><span style="color: #708">userName (String)</span></td></tr>
+					  <tr><td>LocaleBean</td><td>Bean de compatibilidade com o Pug Plugin.<br/><span style="color: #708">locale (Locale)</span></td></tr>
+					  <tr><td>LoginBean</td><td>Bean de compatibilidade com o Pug Plugin.<br/><span style="color: #708">nome (String)</span><br/><span style="color: #708">senha (String)</span><br/>* acesso padrão, usuário: admin e senha: admin</td></tr>
+					  <tr><td>MenuBean</td><td>Bean de compatibilidade com o Pug Plugin.<br/><span style="color: #708">master (boolean)</span></td></tr>
+					  <tr><td>ThemesBean</td><td>Bean de compatibilidade com o Pug Plugin.<br/><span style="color: #708">themes (Map&lt;String, String&gt;)</span></td></tr>
+		          </table>	
+				  <table class="tableKeypress">
+					  <tr>
+					    <th>Teclas</th>
+					    <th>Comandos</th>
+					  </tr>
+					  <tr><td>F11</td><td>fullScreen</td></tr>
+					  <tr><td>Ctrl-S</td><td>save</td></tr>
+					  <tr><td>Ctrl-Shift-S</td><td>saveAll</td></tr>
+					  <tr><td>Alt-Left</td><td>goSubwordLeft</td></tr>
+					  <tr><td>Alt-Right</td><td>goSubwordRight</td></tr>
+					  <tr><td>Ctrl-Up</td><td>scrollLineUp</td></tr>
+					  <tr><td>Ctrl-Down</td><td>scrollLineDown</td></tr>
+					  <tr><td>Shift-Ctrl-L</td><td>splitSelectionByLine</td></tr>
+					  <tr><td>Shift-Tab</td><td>indentLess</td></tr>
+					  <tr><td>Esc</td><td>singleSelectionTop</td></tr>
+					  <tr><td>Ctrl-L</td><td>selectLine</td></tr>
+					  <tr><td>Shift-Ctrl-K</td><td>deleteLine</td></tr>
+					  <tr><td>Ctrl-Enter</td><td>insertLineAfter</td></tr>
+					  <tr><td>Shift-Ctrl-Enter</td><td>insertLineBefore</td></tr>
+					  <tr><td>Ctrl-D</td><td>selectNextOccurrence</td></tr>
+					  <tr><td>Shift-Ctrl-Space</td><td>selectScope</td></tr>
+					  <tr><td>Shift-Ctrl-M</td><td>selectBetweenBrackets</td></tr>
+					  <tr><td>Ctrl-M</td><td>goToBracket</td></tr>
+					  <tr><td>Shift-Ctrl-Up</td><td>swapLineUp</td></tr>
+					  <tr><td>Shift-Ctrl-Down</td><td>swapLineDown</td></tr>
+					  <tr><td>Ctrl-/</td><td>toggleCommentIndented</td></tr>
+					  <tr><td>Ctrl-J</td><td>joinLines</td></tr>
+					  <tr><td>Shift-Ctrl-D</td><td>duplicateLine</td></tr>
+					  <tr><td>Ctrl-T</td><td>transposeChars</td></tr>
+					  <tr><td>F9</td><td>sortLines</td></tr>
+					  <tr><td>Ctrl-F9</td><td>sortLinesInsensitive</td></tr>
+					  <tr><td>F2</td><td>nextBookmark</td></tr>
+					  <tr><td>Shift-F2</td><td>prevBookmark</td></tr>
+					  <tr><td>Ctrl-F2</td><td>toggleBookmark</td></tr>
+					  <tr><td>Shift-Ctrl-F2</td><td>clearBookmarks</td></tr>
+					  <tr><td>Alt-F2</td><td>selectBookmarks</td></tr>
+					  <tr><td>Alt-Q</td><td>wrapLines</td></tr>
+					  <tr><td>Ctrl-K Ctrl-Backspace</td><td>delLineLeft</td></tr>
+					  <tr><td>Backspace</td><td>smartBackspace</td></tr>
+					  <tr><td>Ctrl-K Ctrl-K</td><td>delLineRight</td></tr>
+					  <tr><td>Ctrl-K Ctrl-U</td><td>upcaseAtCursor</td></tr>
+					  <tr><td>Ctrl-K Ctrl-L</td><td>downcaseAtCursor</td></tr>
+					  <tr><td>Ctrl-K Ctrl-Space</td><td>setSublimeMark</td></tr>
+					  <tr><td>Ctrl-K Ctrl-A</td><td>selectToSublimeMark</td></tr>
+					  <tr><td>Ctrl-K Ctrl-W</td><td>deleteToSublimeMark</td></tr>
+					  <tr><td>Ctrl-K Ctrl-X</td><td>swapWithSublimeMark</td></tr>
+					  <tr><td>Ctrl-K Ctrl-Y</td><td>sublimeYank</td></tr>
+					  <tr><td>Ctrl-K Ctrl-G</td><td>clearBookmarks</td></tr>
+					  <tr><td>Ctrl-K Ctrl-C</td><td>showInCenter</td></tr>
+					  <tr><td>Ctrl-Alt-Up</td><td>selectLinesUpward</td></tr>
+					  <tr><td>Ctrl-Alt-Down</td><td>selectLinesDownward</td></tr>
+					  <tr><td>Ctrl-F3</td><td>findUnder</td></tr>
+					  <tr><td>Shift-Ctrl-F3</td><td>findUnderPrevious</td></tr>
+					  <tr><td>Shift-Ctrl-[</td><td>fold</td></tr>
+					  <tr><td>Shift-Ctrl-]</td><td>unfold</td></tr>
+					  <tr><td>Ctrl-K Ctrl-J</td><td>unfoldAll</td></tr>
+					  <tr><td>Ctrl-K Ctrl-0</td><td>unfoldAll</td></tr>
+					  <tr><td>Ctrl-H</td><td>replace</td></tr>
+				  </table>		        
+		        </p:tab>		        
+			</p:tabView>
+			
+			<p:dialog id="dialogEditUser" header="Nova Senha" showEffect="fade" widgetVar="dialogEditUser" modal="true" resizable="false">
+				<h:form id="formEditUser">
+					<h:panelGrid id="panelEditUser" columns="1" cellpadding="5">
+						<h:outputLabel for="inputEditPassword" value="Senha:" style="font-weight:bold" />
+						<p:password id="inputEditPassword" value="#{managerBean.user.password}" style="width: 300px;" styleClass="width 200px;"/>
+						<p:commandButton id="btnEditUser" value="Salvar" icon="ui-icon-check" action="#{managerBean.saveEditUser(true)}" oncomplete="PF('dialogEditUser').hide()"/>
+					</h:panelGrid>
+				</h:form>							
+			</p:dialog>												
+									
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Showcase, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>

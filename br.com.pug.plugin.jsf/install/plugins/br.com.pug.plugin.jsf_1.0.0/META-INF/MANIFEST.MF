@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JSF
+Bundle-SymbolicName: br.com.pug.plugin.jsf;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: br.com.pug.plugin.jsf.Activator
+Require-Bundle: org.eclipse.ui,org.eclipse.core.resources,org.eclipse.
+ core.runtime,org.eclipse.debug.ui,org.eclipse.jdt.core,org.eclipse.jd
+ t.launching,org.eclipse.jdt.ui,org.eclipse.wb.core,org.eclipse.wb.cor
+ e.java;visibility:=reexport,org.eclipse.emf.ecore;bundle-version="2.7
+ .0",org.eclipse.emf.ecore.xmi;bundle-version="2.7.0",org.eclipse.ui.e
+ ditors,org.eclipse.ui.forms,org.eclipse.ui.ide
+Export-Package: br.com.pug.plugin.jsf.wizards
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8"> 
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+			<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+			
+			<h:outputStylesheet library="css" name="standard2.css" />
+
+		</h:head>
+		<h:body>
+			
+			<f:metadata>
+    			<f:viewParam id="uri" name="uri" value="#{loginPugBean.uri}" />
+			</f:metadata>
+					
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader">
+					<a href="login.xhtml" style="text-decoration: none; outline: none;">
+						<span id="spanHeaderTitle">Pug Showcase</span>
+						<span id="spanHeaderSubTitle">for PrimeFaces</span>
+					</a>	
+				</div>
+			</div>
+					
+	    	<div style="width: 370px; margin-left: auto; margin-right: auto; margin-bottom: 20px;">
+			    <h:form prependId="false" id="growlForm">
+			    	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			    </h:form>		
+				<h:form id="dataForm" enctype="multipart/form-data" >
+					<p:panel id="panelForm" header="Login">
+						<h:panelGrid id="genericPanelGrid" columns="3" cellpadding="5">								
+				        	<h:outputLabel id="labelUsername" for="username" value="Usuário:" />
+				        	<p:inputMask id="username" label="Usuário" required="true" value="#{loginPugBean.user.username}" maxlength="60" style="width: 250px;"/>					        	
+				        	<p:message id="msgErrorUsername" for="username" display="tooltip"/>
+							<h:outputLabel id="labelPassword" for="password" value="Senha:" />
+							<p:password id="password" label="Senha" required="true" value="#{loginPugBean.user.password}" maxlength="60" style="width: 250px;"/>
+							<p:message id="msgErrorPassword" for="password" display="tooltip"/>								
+							<p:focus for="username"/>
+						</h:panelGrid>
+						<div style="text-align: center;">						
+		        			<p:commandButton id="loginButton" value="Acessar" action="#{loginPugBean.login}" update=":dataForm:panelForm :growlForm:growl" icon="ui-icon-check" ajax="false"/>
+		        		</div>	        		
+					</p:panel>
+				</h:form>
+			</div>
+											
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Showcase, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>

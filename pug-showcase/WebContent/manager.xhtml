@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8"> 
+		<h:head>
+			<title>Pug Showcase</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+			<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+			<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+			
+			<h:outputStylesheet library="css" name="standard2.css" />
+
+		</h:head>
+		<h:body>
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage library="images" name="ajaxloadingbar.gif" />
+			</p:dialog>		
+				
+			<div id="divHeader">
+				<div id="divSubHeader" style="float: left;">
+					<a href="manager.xhtml" style="text-decoration: none; outline: none;">
+						<span id="spanHeaderTitle">Pug Showcase</span>
+						<span id="spanHeaderSubTitle">for PrimeFaces</span>
+					</a>
+				</div>
+				<div style="float: right;">
+					<h:form>
+						<h:panelGrid columns="3" cellpadding="3">
+							<p:outputLabel value="#{editorBean.user.username}"/>
+							<h:outputLabel>|</h:outputLabel>
+							<p:commandLink action="#{loginPugBean.logoff}">Sair</p:commandLink>
+						</h:panelGrid>
+					</h:form>				
+				</div>
+				<div style="clear: both;">
+				</div>
+			</div>
+					
+		    <h:form prependId="false" id="growlForm">
+		    	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+		    </h:form>		
+			<h:form id="dataForm" enctype="multipart/form-data" >
+				<p:panel id="panelForm" header="Usuários">
+					<div style="margin-bottom: 10px; text-align: right;">
+						<p:commandButton icon="ui-icon-document" title="Novo" action="#{managerBean.newUser}" oncomplete="PF('dialogNewUser').show()" update="formNewUser:panelNewUser"/>
+					</div>
+					<p:dataTable id="dataGridUsers" var="dataGridUsers" value="#{managerBean.listUsers}" sortBy="#{dataGridUsers.username}">
+						<p:column headerText="Nome" filterBy="#{dataGridUsers.username}" sortBy="#{dataGridUsers.username}">
+							<h:outputText value="#{dataGridUsers.username}" />
+						</p:column>
+						<p:column headerText="Nível" sortBy="#{dataGridUsers.level}">
+							<h:outputText value="#{dataGridUsers.level}" />
+						</p:column>
+						<p:column headerText="Pastas" sortBy="#{dataGridUsers.folders}">
+							<h:outputText value="#{dataGridUsers.folders}" />
+						</p:column>
+				        <p:column style="width:80px">
+							<div style="float: left;">								
+								<p:commandLink style="margin-right: 10px" styleClass="ui-icon ui-icon-pencil" title="Editar" oncomplete="PF('dialogEditUser').show()" update="formEditUser:panelEditUser">
+									<f:setPropertyActionListener value="#{dataGridUsers}" target="#{managerBean.user}" />
+									<f:setPropertyActionListener value="false" target="#{managerBean.editPass}" />
+								</p:commandLink>
+							</div>	
+							<div style="float: left;">								
+								<p:commandLink style="margin-right: 10px" styleClass="ui-icon  ui-icon-key" title="Editar Senha" oncomplete="PF('dialogEditUser').show()" update="formEditUser:panelEditUser">
+									<f:setPropertyActionListener value="#{dataGridUsers}" target="#{managerBean.user}" />
+									<f:setPropertyActionListener value="true" target="#{managerBean.editPass}" />
+								</p:commandLink>
+							</div>	
+							<div style="float: left;">								
+								<p:commandLink title="Excluir" style="margin-right: 10px" styleClass="ui-icon ui-icon-closethick" action="#{managerBean.delete}" update="dataForm:dataGridUsers">
+									<p:confirm header="Confirmação" message="'#{dataGridUsers.username}' excluir?" icon="ui-icon-alert"/>
+									<f:setPropertyActionListener value="#{dataGridUsers}" target="#{managerBean.user}" />
+								</p:commandLink>
+							</div>	
+				        </p:column>
+					</p:dataTable>
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				    </p:confirmDialog>				    				    
+					
+				</p:panel>
+			</h:form>
+			
+			<p:dialog id="dialogNewUser" header="Novo Usuário" showEffect="fade" widgetVar="dialogNewUser" modal="true" resizable="false">
+				<h:form id="formNewUser">
+					<h:panelGrid id="panelNewUser" columns="1" cellpadding="5">
+						<h:outputLabel for="inputNewUsername" value="Nome:" style="font-weight:bold" />
+						<p:inputText id="inputNewUsername" value="#{managerBean.user.username}" style="width: 300px;" styleClass="width 200px;"/>
+						<h:outputLabel for="inputNewPassword" value="Senha:" style="font-weight:bold" />
+						<p:password id="inputNewPassword" value="#{managerBean.user.password}" style="width: 300px;" styleClass="width 200px;"/>
+						<h:outputLabel for="comboNewLevel" value="Nível:" style="font-weight:bold" />
+						<p:selectOneMenu id="comboNewLevel" value="#{managerBean.user.level}">
+				            <f:selectItem itemLabel="Admin" itemValue="admin" />
+				            <f:selectItem itemLabel="Dev" itemValue="dev" />
+				            <f:selectItem itemLabel="Client" itemValue="client" />
+				            <f:selectItem itemLabel="View" itemValue="view" />
+				        </p:selectOneMenu> 						
+						<h:outputLabel for="inputNewFolders" value="Pastas:" style="font-weight:bold" />
+						<p:inputText id="inputNewFolders" value="#{managerBean.user.folders}" style="width: 300px;" styleClass="width 200px;"/>
+						<p:commandButton id="btnNewUser" value="Salvar" icon="ui-icon-check" update="dataForm:dataGridUsers" action="#{managerBean.saveNewUser}" oncomplete="PF('dialogNewUser').hide()"/>
+					</h:panelGrid>
+				</h:form>							
+			</p:dialog>
+			
+			<p:dialog id="dialogEditUser" header="Editar Usuário" showEffect="fade" widgetVar="dialogEditUser" modal="true" resizable="false">
+				<h:form id="formEditUser">
+					<h:panelGrid id="panelEditUser" columns="1" cellpadding="5">
+						<p:focus for="inputEditPassword"/>
+						<h:outputLabel for="inputEditUsername" value="Nome:" style="font-weight:bold" />
+						<p:inputText id="inputEditUsername" readonly="true" value="#{managerBean.user.username}" style="width: 300px;" styleClass="width 200px;"/>
+						<h:outputLabel for="inputEditPassword" value="Senha:" style="font-weight:bold" rendered="#{managerBean.editPass}"/>
+						<p:password id="inputEditPassword" value="#{managerBean.user.password}" style="width: 300px;" styleClass="width 200px;" rendered="#{managerBean.editPass}"/>
+						<h:outputLabel for="comboEditLevel" value="Nível:" style="font-weight:bold" />
+						<p:selectOneMenu id="comboEditLevel" value="#{managerBean.user.level}">
+				            <f:selectItem itemLabel="Admin" itemValue="admin" />
+				            <f:selectItem itemLabel="Dev" itemValue="dev" />
+				            <f:selectItem itemLabel="Client" itemValue="client" />
+				            <f:selectItem itemLabel="View" itemValue="view" />
+				        </p:selectOneMenu> 						
+						<h:outputLabel for="inputEditFolders" value="Pastas:" style="font-weight:bold" />
+						<p:inputText id="inputEditFolders" value="#{managerBean.user.folders}" style="width: 300px;" styleClass="width 200px;"/>
+						<p:commandButton id="btnEditUser" value="Salvar" icon="ui-icon-check" update="dataForm:dataGridUsers" action="#{managerBean.saveEditUser(false)}" oncomplete="PF('dialogEditUser').hide()"/>
+					</h:panelGrid>
+				</h:form>							
+			</p:dialog>									
+											
+			<div class="ContentSideSections">
+                <span class="floatLeft fontSize14 gray">Pug Showcase, Copyright 2016<br />by Alberto Henrique Sousa</span>
+                <span class="floatRight fontSize14 gray">Running PrimeFaces 6.0</span>
+                <div style="clear:both" />				
+			</div>
+		</h:body>
+	</f:view>	
+</html>
